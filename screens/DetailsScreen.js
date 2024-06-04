@@ -1,9 +1,10 @@
 // screens/DetailsScreen.js
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { Card } from 'react-native-paper';
+import { Card, useTheme } from 'react-native-paper';
 
 export default function DetailsScreen() {
+    const theme = useTheme();
     return (
         <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }}>
             <View style={{ padding: 16 }}>

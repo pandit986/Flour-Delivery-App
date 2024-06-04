@@ -1,27 +1,46 @@
 // screens/HomeScreen.js
 import React from 'react';
-import { View, Text } from 'react-native';
-import { Button, Card } from 'react-native-paper';
-import { useTheme } from 'react-native-paper';
-
+import { View, Text, StyleSheet } from 'react-native';
+import { Button, Card, useTheme } from 'react-native-paper';
 
 export default function HomeScreen({ navigation }) {
     const theme = useTheme();
-
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.colors.background }}>
             <Card style={{ margin: 16, padding: 16 }}>
-                <Text style={{ fontSize: 20, color: theme.colors.text }}>Welcome to Flour Delivery</Text>
-                <Button
-                    mode="contained"
-                    onPress={() => navigation.navigate('Details')}
-                    style={{ marginTop: 20 }}
-                    color={theme.colors.primary}
-                >
-                    View Products
+                <Text style={{ fontSize: 20, color: theme.fonts.medium.fontFamily }}>Welcome to Flour Delivery</Text>
+                <Button mode="contained" onPress={() => console.log('Pressed')} style={{ fontSize: 30, color: theme.colors.text }}>
+                    Press me
+                </Button>
+                <Button mode="outlined" onPress={() => console.log('Pressed')}>
+                    Press me
+                </Button>
+                <Button mode="text" onPress={() => console.log('Pressed')}>
+                    Text Button
+                </Button>
+                <Button icon="camera" mode="contained" onPress={() => console.log('Pressed')}
+                    style={[styles.button, { backgroundColor: theme.colors.accent }]}
+                    labelStyle={styles.label}>
+                    Press me
                 </Button>
             </Card>
         </View>
-
     );
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    button: {
+        // backgroundColor: 'purple',
+        padding: 8,
+    },
+    label: {
+        color: 'white',
+        fontSize: 16,
+    },
+});
