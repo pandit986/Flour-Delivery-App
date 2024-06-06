@@ -19,11 +19,11 @@ const theme = {
   fonts: {
     ...DefaultTheme.fonts,
     regular: {
-      fontFamily: 'Roboto-Regular',
+      fontFamily: 'san',
       fontWeight: 'normal',
     },
     medium: {
-      fontFamily: 'Roboto-Medium',
+      fontFamily: 'san-medium',
       fontWeight: 'normal',
     },
     light: {
@@ -35,11 +35,11 @@ const theme = {
       fontWeight: 'normal',
     },
     button: {
-      fontFamily: 'Roboto-Medium',
+      fontFamily: 'san-medium',
       fontWeight: 'bold', // Bold font for buttons
     },
     header: {
-      fontFamily: 'Roboto-Medium',
+      fontFamily: 'san-medium',
       fontWeight: 'bold', // Bold font for headers
     },
   },
@@ -48,7 +48,7 @@ const theme = {
       mode: 'contained', // Default mode for buttons (contained, text, outlined)
       uppercase: false, // Keep button text in original case
       labelStyle: {
-        fontFamily: 'Roboto-Medium',
+        fontFamily: 'san-medium',
         fontWeight: 'bold', // Bold font for button text
         fontSize: 16, // Font size for button text
       },
@@ -62,14 +62,14 @@ const theme = {
     },
     Title: {
       style: {
-        fontFamily: 'Roboto-Medium',
+        fontFamily: 'san-medium',
         fontWeight: 'bold', // Bold font for titles
         fontSize: 24, // Large font size for titles
       },
     },
     Subtitle: {
       style: {
-        fontFamily: 'Roboto-Regular',
+        fontFamily: 'san',
         fontWeight: 'normal', // Regular font for subtitles
         fontSize: 16, // Normal font size for subtitles
       },

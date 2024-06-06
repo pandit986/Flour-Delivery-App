@@ -15,14 +15,9 @@ export default function HomeScreen({ navigation }) {
                 <Button mode="outlined" onPress={() => console.log('Pressed')}>
                     Press me
                 </Button>
-                <Button mode="text" onPress={() => console.log('Pressed')}>
-                    Text Button
-                </Button>
-                <Button icon="camera" mode="contained" onPress={() => console.log('Pressed')}
-                    style={[styles.button, { backgroundColor: theme.colors.accent }]}
-                    labelStyle={styles.label}>
-                    Press me
-                </Button>
+                <Text style={{ fontSize: 17, fontFamily: "san" }}>Welcome to Flour Delivery</Text>
+                <Text style={{ fontSize: 17, fontFamily: "san-medium" }}>Welcome to Flour Delivery</Text>
+                <Text style={{ fontSize: 17, fontFamily: "san-bold" }}>Welcome to Flour Delivery</Text>
             </Card>
         </View>
     );
