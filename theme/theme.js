@@ -16,33 +16,6 @@ const theme = {
     divider: '#BDBDBD', // Light gray divider color for separating elements
   },
   roundness: 8, // Rounded corners for a modern look
-  fonts: {
-    ...DefaultTheme.fonts,
-    regular: {
-      fontFamily: 'san',
-      fontWeight: 'normal',
-    },
-    medium: {
-      fontFamily: 'san-medium',
-      fontWeight: 'normal',
-    },
-    light: {
-      fontFamily: 'Roboto-Light',
-      fontWeight: 'normal',
-    },
-    thin: {
-      fontFamily: 'Roboto-Thin',
-      fontWeight: 'normal',
-    },
-    button: {
-      fontFamily: 'san-medium',
-      fontWeight: 'bold', // Bold font for buttons
-    },
-    header: {
-      fontFamily: 'san-medium',
-      fontWeight: 'bold', // Bold font for headers
-    },
-  },
   components: {
     Button: {
       mode: 'contained', // Default mode for buttons (contained, text, outlined)

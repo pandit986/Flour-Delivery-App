@@ -21,3 +21,4 @@ export default function DetailsScreen() {
     );
 }
 
+//  style={[styles.button, { backgroundColor: DefaultTheme.colors.button.background }]}
