@@ -1,52 +1,29 @@
-import React, { useState, useRef } from 'react';
-import { View, ScrollView, Image, Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import React, { useRef } from 'react';
+import { View, Dimensions, Image, StyleSheet } from 'react-native';
+import Carousel from 'react-native-snap-carousel';
+import { Button, useTheme } from 'react-native-paper';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 const ImageSlider = ({ images }) => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const scrollViewRef = useRef(null);
+    const carouselRef = useRef(null);
     const theme = useTheme();
 
-    const onScroll = (event) => {
-        const slideIndex = Math.round(event.nativeEvent.contentOffset.x / screenWidth);
-        setActiveIndex(slideIndex);
-    };
-
-    const renderPagination = () => {
-        return (
-            <View style={styles.paginationContainer}>
-                {images.map((_, index) => (
-                    <View
-                        key={index}
-                        style={[
-                            styles.dot,
-                            { backgroundColor: index === activeIndex ? theme.colors.primary : theme.colors.background },
-                        ]}
-                    />
-                ))}
-            </View>
-        );
-    };
+    const renderItem = ({ item }) => (
+        <View style={styles.slide}>
+            <Image source={{ uri: item }} style={styles.image} />
+        </View>
+    );
 
     return (
         <View style={styles.container}>
-            <ScrollView
-                ref={scrollViewRef}
-                horizontal
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-                onScroll={onScroll}
-                scrollEventThrottle={16}
-            >
-                {images.map((image, index) => (
-                    <View key={index} style={styles.slide}>
-                        <Image source={{ uri: image }} style={styles.image} />
-                    </View>
-                ))}
-            </ScrollView>
-            {renderPagination()}
+            <Carousel
+                ref={carouselRef}
+                data={images}
+                renderItem={renderItem}
+                sliderWidth={screenWidth}
+                itemWidth={screenWidth}
+            />
         </View>
     );
 };
@@ -69,17 +46,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         borderRadius: 8,
-    },
-    paginationContainer: {
-        flexDirection: 'row',
-        position: 'absolute',
-        bottom: 10,
-    },
-    dot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        marginHorizontal: 4,
     },
 });
 

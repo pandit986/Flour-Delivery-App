@@ -16,7 +16,7 @@ const WelcomeScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ImageSlider images={images} />
-            <Text>hii</Text>
+            <Text>App</Text>
         </SafeAreaView>
     )
 }
@@ -24,10 +24,10 @@ const WelcomeScreen = () => {
 export default WelcomeScreen
 
 const createStyles = (theme) => StyleSheet.create({
+
     container: {
-        container: {
-            flex: 1,
-            backgroundColor: theme.colors.background,
-        },
-    }
+        flex: 1,
+        backgroundColor: theme.colors.background,
+    },
+
 });
