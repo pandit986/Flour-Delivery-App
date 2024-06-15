@@ -8,7 +8,7 @@ export default function HomeScreen({ navigation }) {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.colors.background }}>
             <Card style={{ margin: 16, padding: 16 }}>
-                <Text style={{ fontSize: 20, color: theme.fonts.medium.fontFamily }}>Welcome to Flour Delivery</Text>
+                <Text style={{ fontSize: 20 }}>Welcome to Flour Delivery</Text>
                 <Button mode="contained" onPress={() => console.log('Pressed')} style={{ fontSize: 30, color: theme.colors.text }}>
                     Press me
                 </Button>

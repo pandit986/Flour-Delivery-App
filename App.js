@@ -5,6 +5,9 @@ import AppNavigation from './navigator/AppNavigation';
 import store from './store/store';
 import theme from './theme/theme';
 import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
 
@@ -15,11 +18,19 @@ export default function App() {
     'san-bold': require('./assets/fonts/Poppins-SemiBold.ttf'),
   });
 
+  useEffect(() => {
+    const hideSplashScreen = async () => {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    };
+
+    hideSplashScreen();
+  }, [fontsLoaded]);
+
   if (!fontsLoaded) {
     return null;
   }
-
-  console.log(fontsLoaded)
 
   return (
     <ReduxProvider store={store}>

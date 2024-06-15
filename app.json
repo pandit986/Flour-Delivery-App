@@ -4,16 +4,19 @@
     "slug": "Chakki-Fresh-Aata",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/logo/logo.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#F6E4B4"
     },
     "ios": {
       "supportsTablet": true
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
