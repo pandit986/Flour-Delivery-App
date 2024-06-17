@@ -34,24 +34,18 @@ const theme = {
       },
     },
     Title: {
-      style: {
         fontFamily: 'san-medium',
         fontWeight: 'bold', // Bold font for titles
-        fontSize: 24, // Large font size for titles
-      },
+      fontSize: 24, // Large font size for titles
     },
     Subtitle: {
-      style: {
         fontFamily: 'san',
         fontWeight: 'normal', // Regular font for subtitles
         fontSize: 16, // Normal font size for subtitles
-      },
     },
     Card: {
-      style: {
         borderRadius: 8, // Border radius for cards
-        elevation: 4, // Shadow elevation for cards
-      },
+      elevation: 4, // Shadow elevation for cards
     },
   },
 };
