@@ -14,6 +14,7 @@ const theme = {
     success: '#00C853', // Green color for indicating success
     warning: '#FF9800', // Orange color for warnings
     divider: '#BDBDBD', // Light gray divider color for separating elements
+    background1: "#F6E4B4"
   },
   roundness: 8, // Rounded corners for a modern look
   components: {
@@ -34,18 +35,14 @@ const theme = {
       },
     },
     Title: {
-      style: {
-        fontFamily: 'san-medium',
-        fontWeight: 'bold', // Bold font for titles
-        fontSize: 24, // Large font size for titles
-      },
+      fontFamily: 'san-medium',
+      fontWeight: 'bold', // Bold font for titles
+      fontSize: 24, // Large font size for titles
     },
     Subtitle: {
-      style: {
         fontFamily: 'san',
         fontWeight: 'normal', // Regular font for subtitles
         fontSize: 16, // Normal font size for subtitles
-      },
     },
     Card: {
       style: {
