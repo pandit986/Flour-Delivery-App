@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, Image, FlatList, StyleSheet, Dimensions, Animated, TouchableOpacity } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import {useTheme } from 'react-native-paper';
 import { slides } from './helper';
 
 const { width } = Dimensions.get('window');
@@ -46,10 +46,17 @@ const WelcomeScreen = () => {
                     ))}
                 </View>
             </View>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Get Started</Text>
-                </TouchableOpacity>
+            <View style={styles.bottomContainer}>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.outlineButton} activeOpacity={0.7}>
+                        <Text style={styles.outlineButtonText}>Sign in</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+                        <Text style={styles.buttonText}>Get Started</Text>
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.exploreText}>Explore as a Visitor</Text>
             </View>
         </View>
     );
@@ -62,11 +69,6 @@ const createStyles = (theme) => StyleSheet.create({
     },
     carouselContainer: {
         flex: 4, // 80% of the screen height
-    },
-    buttonContainer: {
-        flex: 1, // 20% of the screen height
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     slide: {
         width,
@@ -99,16 +101,52 @@ const createStyles = (theme) => StyleSheet.create({
         backgroundColor: '#888',
         marginHorizontal: 8,
     },
+    bottomContainer: {
+        flex: 1,
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'space-evenly'
+    },
+    buttonContainer: {
+        marginTop:10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 10,
+        paddingHorizontal: 5,
+    },
     button: {
-        backgroundColor: '#000',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
         paddingVertical: 15,
-        paddingHorizontal: 40,
+        paddingHorizontal: 10,
         borderRadius: 25,
+        backgroundColor: theme.colors.primary,
     },
     buttonText: {
         color: '#fff',
         fontSize: 18,
-        fontWeight: 'bold',
+        fontFamily: "san-bold"
+    },
+    outlineButton: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 14,
+        paddingHorizontal: 10,
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: theme.colors.primary,
+    },
+    outlineButtonText: {
+        color: theme.colors.text,
+        fontFamily: "san-bold",
+        fontSize: 18,
+    },
+    exploreText: {
+        fontFamily: "san",
+        color: theme.colors.text
     },
 });
 
