@@ -4,6 +4,7 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
+    skyblue: '#87CEEB', // sky blue color
     primary: '#6200EE', // Purple color for a modern and elegant look
     accent: '#03DAC6', // Teal color for highlighting important elements
     background: '#FFFFFF', // White background for simplicity and elegance
