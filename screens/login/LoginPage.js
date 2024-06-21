@@ -13,7 +13,7 @@ import ErrorMessage from '../../components/Error/ErrorMesssage'; // Import the c
 const LoginPage = ({ navigation }) => {
 
     const schema = yup.object().shape({
-        email: yup.string().email('Invalid email address').required('Email is required'),
+        mobile: yup.string().matches(/^[6-9]\d{9}$/, 'Invalid mobile number').required('Mobile number is required'),
         password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
     });
 
@@ -39,18 +39,18 @@ const LoginPage = ({ navigation }) => {
             </View>
             <Controller
                 control={control}
-                name="email"
+                name="mobile"
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                        label="Email"
+                        label="Mobile Number"
                         value={value}
                         onBlur={onBlur}
                         onChangeText={onChange}
-                        keyboardType="email-address"
+                        keyboardType="phone-pad"
                         autoCapitalize="none"
                         style={styles.input}
-                        error={!!errors.email}
-                        placeholder='Enter Your Email'
+                        error={!!errors.mobile}
+                        placeholder='Enter Your Mobile Number'
                     />
                 )}
             />
