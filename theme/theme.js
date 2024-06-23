@@ -9,12 +9,13 @@ const theme = {
     background: '#FFFFFF', // White background for simplicity and elegance
     surface: '#F5F5F5', // Light gray surface for contrast with the background
     text: '#333333', // Dark gray text for readability
-    error: '#B00020', // Dark red color for indicating errors
+    error: 'red', // Dark red color for indicating errors
     notification: '#FFC107', // Yellow color for notifications
     success: '#00C853', // Green color for indicating success
     warning: '#FF9800', // Orange color for warnings
     divider: '#BDBDBD', // Light gray divider color for separating elements
-    background1: "#F6E4B4"
+    background1: "#F6E4B4",
+    highlight: '#FFD700', // Gold color for highlighting text
   },
   roundness: 8, // Rounded corners for a modern look
   components: {
@@ -40,9 +41,9 @@ const theme = {
       fontSize: 24, // Large font size for titles
     },
     Subtitle: {
-        fontFamily: 'san',
-        fontWeight: 'normal', // Regular font for subtitles
-        fontSize: 16, // Normal font size for subtitles
+      fontFamily: 'san',
+      fontWeight: 'normal', // Regular font for subtitles
+      fontSize: 16, // Normal font size for subtitles
     },
     Card: {
       style: {
