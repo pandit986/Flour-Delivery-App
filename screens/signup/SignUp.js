@@ -233,7 +233,6 @@ const createStyles = (theme) => StyleSheet.create(
       fontFamily: 'san',
       color: theme.colors.error,
       marginBottom: 5,
-      fontFamily: "san",
       fontSize: 10
     },
     termsText: {
