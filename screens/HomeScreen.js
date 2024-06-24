@@ -5,6 +5,7 @@ import { Button, Card, useTheme } from 'react-native-paper';
 
 export default function HomeScreen({ navigation }) {
     const theme = useTheme();
+    
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.colors.background }}>
             <Card style={{ margin: 16, padding: 16 }}>
