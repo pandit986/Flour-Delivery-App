@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { Appbar, Button, useTheme } from 'react-native-paper';
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
@@ -49,61 +49,78 @@ const VerifyOTPPage = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Appbar.Header>
-                <Appbar.BackAction onPress={() => navigation.goBack()} />
-                <Appbar.Content title="Sign In" />
-            </Appbar.Header>
-            <View style={styles.content}>
-                <Text style={[theme.components.Title, styles.title]}>Verify Phone Number</Text>
-                <Text style={[theme.components.subtitle, styles.subtitle]}>An SMS with a 6-digit OTP was sent to</Text>
-                <Text style={styles.number}>
-                    +91 7977180400
-                    <Text style={styles.change}> Change</Text>
-                </Text>
-                <Controller
-                    control={control}
-                    name="otp"
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <View style={styles.otpContainer}>
-                            {Array.from({ length: 6 }).map((_, index) => (
-                                <TextInput
-                                    key={index}
-                                    ref={(ref) => otpRefs.current[index] = ref}
-                                    style={styles.otpInput}
-                                    keyboardType="numeric"
-                                    maxLength={1}
-                                    onBlur={onBlur}
-                                    onChangeText={(text) => {
-                                        const newOtp = value ? value.split('') : [];
-                                        newOtp[index] = text;
-                                        onChange(newOtp.join(''));
-                                        if (text && index < 5) {
-                                            otpRefs.current[index + 1].focus();
-                                        }
-                                    }}
-                                    value={value ? value[index] : ''}
-                                />
-                            ))}
-                        </View>
-                    )}
-                />
-                {errors.otp && <Text style={styles.error}>{errors.otp.message}</Text>}
-                <View style={styles.timerContainer}>
-                    <Text style={styles.timer}>Waiting for OTP... {timer} seconds</Text>
+        <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+            <View style={styles.container}>
+                <Appbar.Header>
+                    <Appbar.BackAction onPress={() => navigation.goBack()} />
+                    <Appbar.Content title="Sign In" />
+                </Appbar.Header>
+                <View style={styles.content}>
+                    <Text style={[theme.components.Title, styles.title]}>Verify Phone Number</Text>
+                    <Text style={[theme.components.subtitle, styles.subtitle]}>An SMS with a 6-digit OTP was sent to</Text>
+                    <Text style={styles.number}>
+                        +91 7977180400
+                        <Text style={styles.change}> Change</Text>
+                    </Text>
+                    <Controller
+                        control={control}
+                        name="otp"
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <View style={styles.otpContainer}>
+                                {Array.from({ length: 6 }).map((_, index) => (
+                                    <TextInput
+                                        key={index}
+                                        ref={(ref) => otpRefs.current[index] = ref}
+                                        style={styles.otpInput}
+                                        keyboardType="numeric"
+                                        maxLength={1}
+                                        onBlur={onBlur}
+                                        onChangeText={(text) => {
+                                            const newOtp = value ? value.split('') : [];
+                                            if (text === '' && index > 0) {
+                                                otpRefs.current[index - 1].focus();
+                                                newOtp[index - 1] = ''; // Clear previous box
+                                            } else {
+                                                newOtp[index] = text;
+                                                if (text && index < 5) {
+                                                    otpRefs.current[index + 1].focus();
+                                                }
+                                            }
+                                            onChange(newOtp.join(''));
+                                        }}
+                                        value={value ? value[index] : ''}
+                                    />
+                                ))}
+                            </View>
+                        )}
+                    />
+                    {errors.otp && <Text style={styles.error}>{errors.otp.message}</Text>}
+                    <View style={styles.timerContainer}>
+                        <Text style={styles.timer}>Waiting for OTP... {timer} seconds</Text>
+                    </View>
+                    <Button mode="contained"
+                        onPress={handleSubmit(onSubmit)}
+                        labelStyle={styles.verifyButtonLabel}
+                        style={styles.submitButton}
+                        rippleColor="#9C4DFF"
+                    >
+                        Verify
+                    </Button>
                 </View>
-                <Button mode="contained" onPress={handleSubmit(onSubmit)} style={styles.submitButton}>
-                    Verify
-                </Button>
             </View>
-        </View>
+        </ScrollView>
+
     );
 };
 
 const createStyles = (theme) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
+    },
+    scrollContainer: {
+        flexGrow: 1,
+        justifyContent: "center",
     },
     content: {
         flex: 1,
@@ -159,12 +176,16 @@ const createStyles = (theme) => StyleSheet.create({
         color: theme.colors.text,
         fontWeight: '600',
     },
+    verifyButtonLabel: {
+        fontFamily: 'san-bold',
+        fontSize: 16,
+        color: "#FFFFFF",
+    },
     submitButton: {
         marginTop: 20,
         alignSelf: 'stretch',
         justifyContent: 'center',
         height: 50,
-        backgroundColor: theme.colors.skyblue,
         fontSize: 16,
         fontWeight: 700
 

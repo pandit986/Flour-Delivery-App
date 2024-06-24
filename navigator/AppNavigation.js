@@ -5,16 +5,19 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import WelcomeScreen from '../screens/welcome-screen/WelcomeScreen';
 import SignUpScreen from '../screens/signup/SignUp';
+import VerifyOTPPage from '../screens/login/VerifyOtpPage';
 
 const Stack = createNativeStackNavigator();
 
 function AppNavigation() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="WelcomeScreen">
+            <Stack.Navigator initialRouteName="VerifyOtp">
                 <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="VerifyOtp" component={VerifyOTPPage} options={{ headerShown: false }} />
+
             </Stack.Navigator>
         </NavigationContainer>
     );
