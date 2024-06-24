@@ -1,15 +1,22 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, Image, FlatList, StyleSheet, Dimensions, Animated, TouchableOpacity } from 'react-native';
-import {useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 import { slides } from './helper';
 
 const { width } = Dimensions.get('window');
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }) => {
+
+    //state
     const [currentIndex, setCurrentIndex] = useState(0);
+
+    //react native paper theme
     const theme = useTheme();
     const styles = createStyles(theme);
 
+    //Function
+
+    //handing the slide 
     const handleScroll = (event) => {
         const scrollPosition = event.nativeEvent.contentOffset.x;
         const index = Math.floor(scrollPosition / width);
@@ -52,11 +59,13 @@ const WelcomeScreen = () => {
                         <Text style={styles.outlineButtonText}>Sign in</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+                    <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={() => navigation.navigate("SignUp")}>
                         <Text style={styles.buttonText}>Get Started</Text>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.exploreText}>Explore as a Visitor</Text>
+                <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                    <Text style={styles.exploreText} >Explore as a Visitor</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -103,12 +112,12 @@ const createStyles = (theme) => StyleSheet.create({
     },
     bottomContainer: {
         flex: 1,
-        flexDirection:'column',
-        alignItems:'center',
-        justifyContent:'space-evenly'
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-evenly'
     },
     buttonContainer: {
-        marginTop:10,
+        marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
