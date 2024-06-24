@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useLayoutEffect, useMemo, useReducer, useState } from "react";
-import { StyleSheet, /* ScrollView, */ View, Text, Alert, Image } from "react-native";
+import { StyleSheet, /* ScrollView, */ View, Text, Alert, Image, ScrollView } from "react-native";
 import { TextInput, Button, useTheme } from 'react-native-paper';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -30,58 +30,60 @@ const LoginPage = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.centerContainer}>
-                <View style={styles.circle}>
-                    <Image source={require('../../assets/logo/logo.png')} style={styles.image} />
+        <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+            <View style={styles.container}>
+                <View style={styles.centerContainer}>
+                    <View style={styles.circle}>
+                        <Image source={require('../../assets/logo/logo.png')} style={styles.image} />
+                    </View>
+                    <Text style={[theme.components.Title, styles.title]}>FlourShop</Text>
                 </View>
-                <Text style={[theme.components.Title, styles.title]}>FlourShop</Text>
-            </View>
-            <Controller
-                control={control}
-                name="mobile"
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        label="Mobile Number"
-                        value={value}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        keyboardType="phone-pad"
-                        autoCapitalize="none"
-                        style={styles.input}
-                        error={!!errors.mobile}
-                        placeholder='Enter Your Mobile Number'
-                    />
-                )}
-            />
-            <ErrorMessage message={errors.email?.message} />
-            <Controller
-                control={control}
-                name="password"
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        label="Password"
-                        value={value}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        secureTextEntry
-                        style={styles.input}
-                        error={!!errors.password}
-                        placeholder='Enter Your Password'
+                <Controller
+                    control={control}
+                    name="mobile"
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            label="Mobile Number"
+                            value={value}
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            keyboardType="phone-pad"
+                            autoCapitalize="none"
+                            style={styles.input}
+                            error={!!errors.mobile}
+                            placeholder='Enter Your Mobile Number'
+                        />
+                    )}
+                />
+                <ErrorMessage message={errors.email?.message} />
+                <Controller
+                    control={control}
+                    name="password"
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            label="Password"
+                            value={value}
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            secureTextEntry
+                            style={styles.input}
+                            error={!!errors.password}
+                            placeholder='Enter Your Password'
 
-                    />
-                )}
-            />
-            <ErrorMessage message={errors.password?.message} />
-            <Text
-                style={styles.forgotPassword}
-                onPress={() => navigation.navigate('ForgotPassword')}>
-                Forgot Password?
-            </Text>
-            <Button mode="contained" onPress={handleSubmit(onSubmit)} style={styles.signInButton}>
-                Sign In
-            </Button>
-        </View>
+                        />
+                    )}
+                />
+                <ErrorMessage message={errors.password?.message} />
+                <Text
+                    style={styles.forgotPassword}
+                    onPress={() => navigation.navigate('ForgotPassword')}>
+                    Forgot Password?
+                </Text>
+                <Button mode="contained" onPress={handleSubmit(onSubmit)} style={styles.signInButton}>
+                    Sign In
+                </Button>
+            </View>
+        </ScrollView>
     );
 
 }
@@ -97,6 +99,10 @@ const createStyles = (theme) => StyleSheet.create({
         padding: 16,
         backgroundColor: 'white',
 
+    },
+    scrollContainer: {
+        flexGrow: 1,
+        justifyContent: "center",
     },
     centerContainer: {
         alignItems: 'center',  // Center align only the circle and title
