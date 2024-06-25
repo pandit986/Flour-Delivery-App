@@ -6,6 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import ErrorMessage from '../../components/Error/ErrorMesssage'; // Import the custom error component
+import CustomButton from '../../components/Button/Button';
 
 
 
@@ -78,9 +79,8 @@ const LoginPage = ({ navigation }) => {
                 onPress={() => navigation.navigate('ForgotPassword')}>
                 Forgot Password?
             </Text>
-            <Button mode="contained" onPress={handleSubmit(onSubmit)} style={styles.signInButton}>
-                Sign In
-            </Button>
+            <CustomButton onPress={handleSubmit(onSubmit)} label={" Sign In"}></CustomButton>
+
         </View>
     );
 

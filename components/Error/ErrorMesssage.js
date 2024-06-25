@@ -8,8 +8,10 @@ const ErrorMessage = ({ message }) => {
 
 const styles = StyleSheet.create({
     errorText: {
+        fontFamily: 'san',
         color: 'red',
-        marginBottom: 8,
+        marginBottom: 5,
+        fontSize: 10
     },
 });
 

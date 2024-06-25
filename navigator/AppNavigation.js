@@ -6,6 +6,7 @@ import HomeScreen from '../screens/HomeScreen';
 import WelcomeScreen from '../screens/welcome-screen/WelcomeScreen';
 import SignUpScreen from '../screens/signup/SignUp';
 import VerifyOTPPage from '../screens/login/VerifyOtpPage';
+import LoginPage from '../screens/login/LoginPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +18,7 @@ function AppNavigation() {
                 <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="VerifyOtp" component={VerifyOTPPage} options={{ headerShown: false }} />
-
+                <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

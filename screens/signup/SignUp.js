@@ -6,6 +6,8 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TermsAndConditionsModal from "./modal/TermsAndConditions";
 import { helpData } from "./help";
+import CustomButton from "../../components/Button/Button";
+import ErrorMessage from "../../components/Error/ErrorMesssage";
 
 const SignUpSchema = Yup.object().shape({
   username: Yup.string().required("Name is required"),
@@ -145,8 +147,8 @@ const SignUpScreen = ({ navigation }) => {
               name="password"
               defaultValue=""
             />
-            {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
-
+            {errors.password && <ErrorMessage message={errors.password.message} />
+            }
             <View style={styles.checkboxContainer}>
               <Controller
                 control={control}
@@ -170,16 +172,7 @@ const SignUpScreen = ({ navigation }) => {
               <Text style={styles.errorText}>{errors.agreedToTerms.message}</Text>
             )}
 
-            <Button
-              mode="contained"
-              onPress={handleSubmit(onSubmit)}
-              style={styles.signUpButton}
-              labelStyle={styles.signUpButtonLabel}
-              // rippleColor={"#CCCCCC"}
-              rippleColor="#9C4DFF"
-            >
-              Sign Up
-            </Button>
+            <CustomButton onPress={handleSubmit(onSubmit)} label={"Sign Up"}></CustomButton>
 
             <View style={styles.signInContainer}>
               <Text style={styles.signInText}>Already have an account? </Text>
