@@ -55,7 +55,7 @@ const WelcomeScreen = ({ navigation }) => {
             </View>
             <View style={styles.bottomContainer}>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.outlineButton} activeOpacity={0.7}>
+                    <TouchableOpacity style={styles.outlineButton} activeOpacity={0.7} onPress={() => navigation.navigate("LoginPage")}>
                         <Text style={styles.outlineButtonText}>Sign in</Text>
                     </TouchableOpacity>
 
