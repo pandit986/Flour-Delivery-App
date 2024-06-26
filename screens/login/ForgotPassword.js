@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { Text, TextInput, Button, HelperText } from 'react-native-paper';
+import { Text, TextInput, HelperText } from 'react-native-paper';
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import CustomButton from '../../components/Button/Button';
 
 // Define the validation schema using Yup
 const schema = yup.object().shape({
@@ -44,9 +45,8 @@ const ForgotPassword = () => {
                         </>
                     )}
                 />
-                <Button mode="contained" onPress={handleSubmit(onSubmit)} style={styles.button}>
-                    Submit
-                </Button>
+                <CustomButton mode="contained" onPress={handleSubmit(onSubmit)} label={'Submit'} >
+                </CustomButton>
             </View>
         </ScrollView>
 
@@ -77,9 +77,7 @@ const styles = StyleSheet.create({
     input: {
         marginBottom: 20,
     },
-    button: {
-        marginTop: 10,
-    },
+
 });
 
 export default ForgotPassword;
