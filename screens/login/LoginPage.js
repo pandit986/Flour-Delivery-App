@@ -57,6 +57,7 @@ const LoginPage = ({ navigation }) => {
                         <TextInput
                             label="Email"
                             value={value}
+                            mode="outlined"
                             onBlur={onBlur}
                             onChangeText={onChange}
                             keyboardType="email-address"
@@ -74,6 +75,7 @@ const LoginPage = ({ navigation }) => {
                     render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
                             label="Password"
+                            mode="outlined"
                             value={value}
                             onBlur={onBlur}
                             onChangeText={onChange}
@@ -123,8 +125,6 @@ const createStyles = (theme) => StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-
-
     image: {
         resizeMode: 'contain', // Ensure the image maintains its aspect ratio
     },
@@ -143,7 +143,6 @@ const createStyles = (theme) => StyleSheet.create({
         color: 'blue',
         textAlign: 'right',
         marginBottom: 12,
-        textDecorationLine: 'underline',
     },
     signInButton: {
         marginTop: 16,
