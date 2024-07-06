@@ -1,10 +1,11 @@
 // reducers/index.js
 import { combineReducers } from '@reduxjs/toolkit';
-// import counterReducer from '../screens/counterSlice';
+import cartReducer from "../screens/header/card/cartSlice"
+import locationReducer from "../screens/header/location/locationSlice"
 
 const rootReducer = combineReducers({
-    // counter: counterReducer,
-    // Add other reducers here
+    cart: cartReducer,
+    location: locationReducer
 });
 
 export default rootReducer;
