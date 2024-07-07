@@ -50,7 +50,7 @@ function MainTabNavigator() {
             tabBarLabel: ({ focused, color }) => {
                 let label;
                 let fontSize = 12;
-                let fontWeight = focused ? 'bold' : 'normal';
+                // let fontWeight = focused ? 'bold' : 'normal';
                 let fontFamily = "san"
                 switch (route.name) {
                     case 'Shop':
@@ -71,7 +71,7 @@ function MainTabNavigator() {
                     default:
                         label = route.name;
                 }
-                return <Text style={{ fontSize, fontWeight, color, fontFamily }}>{label}</Text>;
+                return <Text style={{ fontSize, color, fontFamily }}>{label}</Text>;
             },
         })}>
             {/* <Tab.Screen name="Shop" component={HomeScreen} options={{ headerShown: false }} /> */}
@@ -85,11 +85,11 @@ function MainTabNavigator() {
                                 <Ionicons name="location-outline" size={24} color="#6200EE" />
                                 <View style={styles.locationTextContainer}>
                                     <View style={styles.locationTitleContainer}>
-                                        <Text style={styles.locationTitle}>{truncateText(locationState.pin, 15)}</Text>
+                                        <Text style={styles.locationTitle}>{!locationState.pin ? "Select Pin Code" : truncateText(locationState.pin, 15)}</Text>
                                         <Ionicons name="chevron-forward-outline" size={12} color="#000" style={styles.chevronIcon} />
                                     </View>
                                     <Text style={styles.locationSubtitle}>
-                                        {(truncateText(locationState.selectedCity, 25)).toUpperCase()}
+                                        {!locationState.selectedCity ? "Select Location By OnClick" : (truncateText(locationState.selectedCity, 25)).toUpperCase()}
                                     </Text>
                                 </View>
                             </TouchableOpacity>

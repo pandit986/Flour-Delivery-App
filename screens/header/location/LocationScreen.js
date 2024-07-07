@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity ,BackHandler } from 'react-native';
 import { TextInput, Button, useTheme, IconButton } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { generalUpdate, setLocation } from './locationSlice';
 
 // Dummy data with pincode and corresponding cities
@@ -24,6 +25,9 @@ const schema = Yup.object().shape({
 });
 
 const LocationScreen = ({ navigation }) => {
+
+  //state 
+  const [showButtonAndText, setShowButtonAndText] = useState(true);
 
   //react-hook-form
   const { control, handleSubmit, formState: { errors }, watch } = useForm({
@@ -61,14 +65,35 @@ const LocationScreen = ({ navigation }) => {
     }
     else {
       dispatch(generalUpdate({ field: 'message', value: "" }));
+      if (!locationState.city || pinValue?.length < 6) dispatch(generalUpdate({ field: 'city', value: [] }));
+      // dispatch(generalUpdate({ field: 'validPin', value: false }));
     }
   }, [pinValue, dispatch]);
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () => backHandler.remove(); // Cleanup the event listener
+  }, [showButtonAndText]);
 
   // Function 
   const SelectCity = (city) => {
     dispatch(generalUpdate({ field: 'selectedCity', value: city }));
     navigation.goBack()
   }
+
+  const handleBackPress = () => {
+    if (!showButtonAndText) {
+      setShowButtonAndText(true);
+      // dispatch(setLocation({ pin: '', city: [], validPin: false, message: '' }));
+      dispatch(generalUpdate({ field: 'selectedCity', value: '' }));
+      dispatch(generalUpdate({ field: 'city', value: [] }));
+      dispatch(generalUpdate({ field: 'pin', value: '' }));
+      return true; // Prevent default behavior
+    } else {
+      navigation.goBack();
+      return false; // Allow default behavior
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -83,7 +108,17 @@ const LocationScreen = ({ navigation }) => {
         <Text style={styles.headerTitle}>Your Location</Text>
       </View>
       <View style={styles.body}>
-        <Text style={styles.modalText}>Please enter your pincode or allow access to your location</Text>
+        {(showButtonAndText && !locationState.pin) && <><Text style={styles.modalText}>Please enter your pincode or allow access to your location</Text>
+          <Button
+            icon={() => <MaterialIcons name="gps-fixed" size={20} color={theme.colors.primary} />}
+            mode="outlined"
+            onPress={() => console.log('Use current location button pressed')}
+            style={styles.locationButton}
+          >
+            Use Current Location
+          </Button>
+          <Text>Or</Text>
+        </>}
         <Controller
           control={control}
           name="pin"
@@ -94,9 +129,13 @@ const LocationScreen = ({ navigation }) => {
               placeholder="Enter Your Location"
               left={<TextInput.Icon icon={() => <Ionicons name="location-outline" size={20} color={theme.colors.primary} />} />}
               style={styles.input}
+              onBlur={() => {
+                onBlur();
+                // setShowButtonAndText(true);
+              }}
+              onFocus={() => setShowButtonAndText((prev)=>!prev)}
               maxLength={6}
               keyboardType="numeric"
-              onBlur={onBlur}
               onChangeText={onChange}
               value={value}
               error={errors.pin ? true : false}
@@ -118,8 +157,8 @@ const LocationScreen = ({ navigation }) => {
           </Text>
         )}
         {locationState.validPin && (
-          <ScrollView style={styles.cityList}>
-            {locationState.city.map((city, index) => (
+          <ScrollView style={styles.cityList} showsVerticalScrollIndicator={false}>
+            {Array.isArray(locationState.city) && locationState.city.map((city, index) => (
               <TouchableOpacity key={index} style={styles.cityItem} onPress={() => SelectCity(city)}>
                 <Ionicons name="location-outline" size={20} color={theme.colors.primary} style={styles.icon} />
                 <Text style={styles.cityText} >{city.toUpperCase()}</Text>
@@ -204,6 +243,12 @@ const createStyles = (theme) => StyleSheet.create({
   },
   icon: {
     marginRight: 4,
+  },
+  locationButton: {
+    marginBottom: 20,
+    width: '100%',
+    borderRadius: 10,
+    borderColor: theme.colors.primary
   },
 });
 
