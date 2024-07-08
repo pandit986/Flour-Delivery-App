@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity ,BackHandler } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity, BackHandler } from 'react-native';
 import { TextInput, Button, useTheme, IconButton } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { generalUpdate, setLocation } from './locationSlice';
+import { generalUpdate, reSetState, setLocation } from './locationSlice';
 
 // Dummy data with pincode and corresponding cities
 const dummyData = [
@@ -27,10 +27,10 @@ const schema = Yup.object().shape({
 const LocationScreen = ({ navigation }) => {
 
   //state 
-  const [showButtonAndText, setShowButtonAndText] = useState(true);
+  const [showButtonAndText, setShowButtonAndText] = useState('');
 
   //react-hook-form
-  const { control, handleSubmit, formState: { errors }, watch } = useForm({
+  const { control, handleSubmit, formState: { errors }, watch, setValue } = useForm({
     // resolver: yupResolver(schema),
     // mode: 'onBlur',
     // reValidateMode: 'onBlur'
@@ -38,8 +38,13 @@ const LocationScreen = ({ navigation }) => {
 
   const theme = useTheme(); // Access theme for styling
   const styles = createStyles(theme);
-  const dispatch = useDispatch(); // Redux dispatch
-  const locationState = useSelector((state) => state.location); // Access location state from Redux
+
+  // Redux dispatch
+  const dispatch = useDispatch();
+
+  // Access location state from Redux
+  const locationState = useSelector((state) => state.location);
+  const textInputRef = useRef(null);
 
   const pinValue = watch('pin'); // Watch pin field for changes
 
@@ -66,14 +71,22 @@ const LocationScreen = ({ navigation }) => {
     else {
       dispatch(generalUpdate({ field: 'message', value: "" }));
       if (!locationState.city || pinValue?.length < 6) dispatch(generalUpdate({ field: 'city', value: [] }));
-      // dispatch(generalUpdate({ field: 'validPin', value: false }));
     }
   }, [pinValue, dispatch]);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-    return () => backHandler.remove(); // Cleanup the event listener
+    // Cleanup the event listener
+    return () => backHandler.remove();
   }, [showButtonAndText]);
+
+  useEffect(() => {
+    if (locationState?.pin && locationState?.city) {
+      setShowButtonAndText(false)
+    } else {
+      setShowButtonAndText(true)
+    }
+  }, [])
 
   // Function 
   const SelectCity = (city) => {
@@ -83,18 +96,21 @@ const LocationScreen = ({ navigation }) => {
 
   const handleBackPress = () => {
     if (!showButtonAndText) {
+      textInputRef.current.blur();
+      setValue('pin', "")
+      dispatch(reSetState());
       setShowButtonAndText(true);
-      // dispatch(setLocation({ pin: '', city: [], validPin: false, message: '' }));
-      dispatch(generalUpdate({ field: 'selectedCity', value: '' }));
-      dispatch(generalUpdate({ field: 'city', value: [] }));
-      dispatch(generalUpdate({ field: 'pin', value: '' }));
       return true; // Prevent default behavior
     } else {
-      navigation.goBack();
+      if (showButtonAndText === false) {
+        navigation.goBack();
+      }
       return false; // Allow default behavior
     }
   };
 
+  console.log(showButtonAndText, "showButtonAndText")
+  console.log(locationState)
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -117,13 +133,14 @@ const LocationScreen = ({ navigation }) => {
           >
             Use Current Location
           </Button>
-          <Text>Or</Text>
+          <Text style={{ textAlign: "center", fontSize: 16, fontFamily: "san", opacity: 0.7 }}>Or</Text>
         </>}
         <Controller
           control={control}
           name="pin"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
+              ref={textInputRef}
               mode="outlined"
               label="Enter Your Location"
               placeholder="Enter Your Location"
@@ -131,15 +148,15 @@ const LocationScreen = ({ navigation }) => {
               style={styles.input}
               onBlur={() => {
                 onBlur();
-                // setShowButtonAndText(true);
+                // setShowButtonAndText((prev) => !prev);
               }}
-              onFocus={() => setShowButtonAndText((prev)=>!prev)}
+              onFocus={() => setShowButtonAndText(false)}
               maxLength={6}
               keyboardType="numeric"
               onChangeText={onChange}
               value={value}
               error={errors.pin ? true : false}
-              defaultValue={locationState?.pin}
+              defaultValue={locationState?.pin || ""}
             />
           )}
         />

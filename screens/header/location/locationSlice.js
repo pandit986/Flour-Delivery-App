@@ -21,10 +21,17 @@ const locationSlice = createSlice({
     generalUpdate: (state, action) => {
       const { field, value } = action.payload;
       state[field] = value;
+    },
+    reSetState: (state, action) => {
+      state.pin = "";
+      state.city = [];
+      state.validPin = false;
+      state.message = "";
+      state.selectedCity = "";
     }
   }
 });
 
-export const { setLocation, generalUpdate } = locationSlice.actions;
+export const { setLocation, generalUpdate,reSetState } = locationSlice.actions;
 
 export default locationSlice.reducer;
