@@ -1,22 +1,25 @@
 import React from 'react'
-import { useEffect, useLayoutEffect, useMemo, useReducer, useState } from "react";
-import { StyleSheet, /* ScrollView, */ View, Text, Alert, Image } from "react-native";
+import { StyleSheet, ScrollView, View, Text, Image, Dimensions } from "react-native";
 import { TextInput, Button, useTheme } from 'react-native-paper';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import ErrorMessage from '../../components/Error/ErrorMesssage'; // Import the custom error component
+import ErrorMessage from '../../components/Error/ErrorMesssage';
 import CustomButton from '../../components/Button/Button';
 
-
-
+const schema = yup.object().shape({
+    email: yup.string().email('Invalid email address').required('Email is required'),
+    password: yup.string()
+        .min(8, 'Password must be at least 8 characters')
+        .max(16, 'Password must be no more than 16 characters')
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+        .matches(/\d/, 'Password must contain at least one number')
+        .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character')
+        .required('Password is required'),
+});
 
 const LoginPage = ({ navigation }) => {
-
-    const schema = yup.object().shape({
-        email: yup.string().email('Invalid email address').required('Email is required'),
-        password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-    });
 
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
@@ -25,106 +28,104 @@ const LoginPage = ({ navigation }) => {
     const theme = useTheme();
     const styles = createStyles(theme); // Create styles based on the theme
 
+    // Get screen dimensions
+    const { width, height } = Dimensions.get("window");
+    const imageHeight = height * 0.3; // 30% of screen height
 
     const onSubmit = data => {
         console.log(data);
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.centerContainer}>
-                <View style={styles.circle}>
-                    <Image source={require('../../assets/logo/logo.png')} style={styles.image} />
+        <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+            <View style={styles.container}>
+                <View style={styles.imageContainer}>
+                    <Image
+                        source={require('../../assets/login/login.png')}
+                        style={[styles.image, { width: width * 0.8, height: imageHeight }]}
+                    />
+                    <Text style={[styles.title]}>Welcome To FlourShop</Text>
                 </View>
-                <Text style={[theme.components.Title, styles.title]}>FlourShop</Text>
+                <View style={styles.formContainer}>
+                    <Controller
+                        control={control}
+                        name="email"
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                label="Email"
+                                value={value}
+                                mode="outlined"
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                style={styles.input}
+                                error={!!errors.email}
+                                placeholder='Enter Your Email'
+                            />
+                        )}
+                    />
+                    <ErrorMessage message={errors.email?.message} />
+                    <Controller
+                        control={control}
+                        name="password"
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                label="Password"
+                                mode="outlined"
+                                value={value}
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                secureTextEntry
+                                style={styles.input}
+                                error={!!errors.password}
+                                placeholder='Enter Your Password'
+                            />
+                        )}
+                    />
+                    <ErrorMessage message={errors.password?.message} />
+                    <Text
+                        style={styles.forgotPassword}
+                        onPress={() => navigation.navigate('ForgotPassword')}>
+                        Forgot Password?
+                    </Text>
+                    <CustomButton onPress={handleSubmit(onSubmit)} label={" Sign In"}></CustomButton>
+                </View>
             </View>
-            <Controller
-                control={control}
-                name="email"
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        label="Email"
-                        value={value}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        style={styles.input}
-                        error={!!errors.email}
-                        placeholder='Enter Your Email'
-                    />
-                )}
-            />
-            <ErrorMessage message={errors.email?.message} />
-            <Controller
-                control={control}
-                name="password"
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        label="Password"
-                        value={value}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        secureTextEntry
-                        style={styles.input}
-                        error={!!errors.password}
-                        placeholder='Enter Your Password'
+        </ScrollView>
 
-                    />
-                )}
-            />
-            <ErrorMessage message={errors.password?.message} />
-            <Text
-                style={styles.forgotPassword}
-                onPress={() => navigation.navigate('ForgotPassword')}>
-                Forgot Password?
-            </Text>
-            <CustomButton onPress={handleSubmit(onSubmit)} label={" Sign In"}></CustomButton>
-
-        </View>
     );
 
 }
-
 export default LoginPage;
-
-
 
 const createStyles = (theme) => StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        padding: 16,
+        // padding: 16,
         backgroundColor: 'white',
-
     },
-    centerContainer: {
-        alignItems: 'center',  // Center align only the circle and title
-        marginBottom: 20,
+    scrollContainer: {
+        flexGrow: 1,
+        justifyContent: "center",
     },
-    circle: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        backgroundColor: "black",
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-        overflow: 'hidden'
+    imageContainer: {
+        flex: 3,
+        paddingTop: 20,
+        justifyContent: "center",
+        alignItems: "center",
     },
-
-
     image: {
-        width: 100,
-        height: 100,
         resizeMode: 'contain', // Ensure the image maintains its aspect ratio
     },
 
     title: {
+        fontFamily: "san-bold",
+        fontSize: 20,
         textAlign: 'center',
-        marginBottom: 20,
-        marginTop: 20,
+        // marginBottom: 20,
+        // marginTop: 20,
     },
 
     input: {
@@ -135,11 +136,15 @@ const createStyles = (theme) => StyleSheet.create({
         color: 'blue',
         textAlign: 'right',
         marginBottom: 12,
-        textDecorationLine: 'underline',
     },
     signInButton: {
         marginTop: 16,
         backgroundColor: theme.colors.primary,
+    },
+    formContainer: {
+        flex: 7,
+        paddingHorizontal: 20,
+        // justifyContent: "center",
     },
 });
 
