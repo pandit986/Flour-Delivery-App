@@ -7,18 +7,21 @@ import WelcomeScreen from '../screens/welcome-screen/WelcomeScreen';
 import SignUpScreen from '../screens/signup/SignUp';
 import VerifyOTPPage from '../screens/login/VerifyOtpPage';
 import LoginPage from '../screens/login/LoginPage';
+import ImageCarousel from '../screens/home-page/image-swipe/ImageCarousel'
 
 const Stack = createNativeStackNavigator();
 
 function AppNavigation() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="WelcomeScreen">
+            <Stack.Navigator initialRouteName="ImageCarousel">
                 <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="VerifyOtp" component={VerifyOTPPage} options={{ headerShown: false }} />
                 <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
+                <Stack.Screen name="ImageCarousel" component={ImageCarousel} options={{ headerShown: false }} />
+
             </Stack.Navigator>
         </NavigationContainer>
     );
