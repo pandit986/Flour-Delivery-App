@@ -1,7 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/home-page/HomeScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Octicons from 'react-native-vector-icons/Octicons';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CartIconWithBadge from '../screens/header/card/CartIconWithBadge';
 import { truncateText } from '../screens/header/helper';
@@ -82,7 +83,8 @@ function MainTabNavigator() {
                     headerTitle: () => (
                         <View style={styles.headerContainer} >
                             <TouchableOpacity onPress={() => navigation.navigate('LocationScreen')} style={styles.locationContainer}>
-                                <Ionicons name="location-outline" size={24} color="#6200EE" />
+                                {/* <Ionicons name="location-outline" size={24} color="#6200EE" /> */}
+                                <Octicons name="location" size={28} color="#6200EE"></Octicons>
                                 <View style={styles.locationTextContainer}>
                                     <View style={styles.locationTitleContainer}>
                                         <Text style={styles.locationTitle}>{!locationState.pin ? "Select Pin Code" : truncateText(locationState.pin, 15)}</Text>

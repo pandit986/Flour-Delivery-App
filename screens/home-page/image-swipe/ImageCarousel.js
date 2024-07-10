@@ -1,92 +1,86 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, Dimensions, Animated, TouchableOpacity } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { View, FlatList, Image, Dimensions, StyleSheet } from 'react-native';
 import { images } from './helper';
 
 const { width } = Dimensions.get('window');
-
 const ImageCarousel = () => {
 
     //state
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    //react native paper theme
-    const theme = useTheme();
-    const styles = createStyles(theme);
+    //Ref
+    const flatListRef = useRef(null);
 
-    const handleScroll = (event) => {
-        const scrollPosition = event.nativeEvent.contentOffset.x;
-        const index = Math.round(scrollPosition / width);
-        setCurrentIndex(index);
-    };
+    const onViewRef = useRef(({ viewableItems }) => {
+        //viewableItems is an array of objects that represent the currently visible items in the FlatList
+        if (viewableItems.length > 0) {
+            setCurrentIndex(viewableItems[0].index);
+        }
+    });
 
+    // viewConfigRef ensures that the callback is triggered when 50% of an item is visible.
+    const viewConfigRef = useRef({ viewAreaCoveragePercentThreshold: 50 });
 
     return (
         <View style={styles.container}>
-            <View style={styles.carouselContainer}>
-                <FlatList
-                    data={images}
-                    horizontal
-                    pagingEnabled
-                    showsHorizontalScrollIndicator={false}
-                    onScroll={handleScroll}
-                    renderItem={({ item }) => (
-                        <View style={styles.slide}>
-                            <Image source={item.image} style={styles.image} />
-                        </View>
-                    )}
-                    keyExtractor={(item) => item.id}
-                />
-                <View style={styles.pagination}>
-                    {images.map((_, index) => (
-                        <View
-                            key={index.toString()}
-                            style={[
-                                styles.dot,
-                                { opacity: currentIndex === index ? 1 : 0.3 },
-                            ]}
-                        />
-                    ))}
-                </View>
-
+            <FlatList
+                data={images}
+                keyExtractor={(item) => item.id}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => (
+                    <Image source={{ uri: item.uri }} style={styles.image} />
+                )}
+                onViewableItemsChanged={onViewRef.current} //returns a mutable object whose .current
+                viewabilityConfig={viewConfigRef.current}
+                ref={flatListRef}
+            />
+            <View style={styles.pagination}>
+                {images.map((_, index) => (
+                    <View
+                        key={index}
+                        style={[
+                            styles.dot,
+                            currentIndex === index ? styles.activeDot : styles.inactiveDot,
+                        ]}
+                    />
+                ))}
             </View>
         </View>
-
     );
 };
 
-const createStyles = (theme) => StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: theme.colors.background,
-    },
-    carouselContainer: {
-        flex: 4, // 80% of the screen height
-    },
-    slide: {
-        width,
+        position: 'relative',
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: 10,
     },
     image: {
-        width: '100%',
-        height: 300,
-        resizeMode: 'contain',
+        width: width,
+        height: 200,
+        resizeMode: 'cover',
     },
     pagination: {
-        flexDirection: 'row',
         position: 'absolute',
-        bottom: 20,
-        alignSelf: 'center',
+        bottom: 10,
+        flexDirection: 'row',
     },
     dot: {
         height: 10,
         width: 10,
         borderRadius: 5,
-        backgroundColor: '#888',
-        marginHorizontal: 8,
+        marginHorizontal: 5,
+    },
+    activeDot: {
+        backgroundColor: '#000',
+    },
+    inactiveDot: {
+        backgroundColor: '#ccc',
+        backgroundColor: 'white',
+
     },
 });
+
 
 export default ImageCarousel;
