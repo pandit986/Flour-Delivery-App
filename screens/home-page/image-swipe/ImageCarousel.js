@@ -1,86 +1,94 @@
-import React, { useRef, useState } from 'react';
-import { View, FlatList, Image, Dimensions, StyleSheet } from 'react-native';
-import { images } from './helper';
+import React, { useRef, useEffect } from 'react';
+import { View, Dimensions, Image, StyleSheet } from 'react-native';
+import Carousel from 'react-native-reanimated-carousel';
+import Animated, { Easing, useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window');
+
+const images = [
+    'https://images.unsplash.com/photo-1721069275326-5fd80e01ce8d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1706430263184-c1f9ac844a54?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1708958151986-2b032fde35ce?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1721069275326-5fd80e01ce8d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1706430263184-c1f9ac844a54?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1708958151986-2b032fde35ce?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+];
+
 const ImageCarousel = () => {
 
-    //state
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const progressValue = useSharedValue(0);
 
-    //Ref
-    const flatListRef = useRef(null);
-
-    const onViewRef = useRef(({ viewableItems }) => {
-        //viewableItems is an array of objects that represent the currently visible items in the FlatList
-        if (viewableItems.length > 0) {
-            setCurrentIndex(viewableItems[0].index);
-        }
-    });
-
-    // viewConfigRef ensures that the callback is triggered when 50% of an item is visible.
-    const viewConfigRef = useRef({ viewAreaCoveragePercentThreshold: 50 });
-
+    console.log(progressValue, "progressValue")
     return (
-        <View style={styles.container}>
-            <FlatList
+        <View>
+            <Carousel
+                width={width}
+                height={width * 0.6}
+                loop
+                autoPlay
+                autoPlayInterval={4000}
+                onProgressChange={(progress, currentIndex) => {
+                    progressValue.value = currentIndex;
+                }}
                 data={images}
-                keyExtractor={(item) => item.id}
-                horizontal
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
-                    <Image source={{ uri: item.uri }} style={styles.image} />
+                    <Image source={{ uri: item }} style={styles.image} />
                 )}
-                onViewableItemsChanged={onViewRef.current} //returns a mutable object whose .current
-                viewabilityConfig={viewConfigRef.current}
-                ref={flatListRef}
             />
-            <View style={styles.pagination}>
-                {images.map((_, index) => (
-                    <View
-                        key={index}
-                        style={[
-                            styles.dot,
-                            currentIndex === index ? styles.activeDot : styles.inactiveDot,
-                        ]}
-                    />
-                ))}
+            <View style={styles.paginationWrapper}>
+                <View style={styles.paginationContainer}>
+                    {images.map((_, index) => {
+                        const animatedStyle = useAnimatedStyle(() => {
+                            const backgroundColor = withTiming(progressValue.value === index ? '#FFFFFF' : '#888888', {
+                                duration: 500,
+                                easing: Easing.inOut(Easing.ease),
+                            });
+                            const width = withTiming(progressValue.value === index ? 20 : 10, {
+                                duration: 700,
+                                easing: Easing.inOut(Easing.ease),
+                            });
+
+                            return {
+                                backgroundColor, width
+                            };
+                        });
+
+                        return (
+                            <Animated.View key={index} style={[styles.paginationDot, animatedStyle]} />
+                        );
+                    })}
+                </View>
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        position: 'relative',
-        alignItems: 'center',
-    },
     image: {
-        width: width,
-        height: 200,
-        resizeMode: 'cover',
+        width: '100%',
+        height: '100%',
     },
-    pagination: {
+    paginationWrapper: {
         position: 'absolute',
         bottom: 10,
+        width: '100%',
+        alignItems: 'center',
+    },
+    paginationContainer: {
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        paddingVertical: 5,
+        paddingHorizontal: 12,
+        borderRadius: 20,
     },
-    dot: {
-        height: 10,
-        width: 10,
+    paginationDot: {
+        width: 5,
+        height: 5,
         borderRadius: 5,
-        marginHorizontal: 5,
-    },
-    activeDot: {
-        backgroundColor: '#000',
-    },
-    inactiveDot: {
-        backgroundColor: '#ccc',
-        backgroundColor: 'white',
-
+        marginHorizontal: 4,
     },
 });
-
 
 export default ImageCarousel;
