@@ -23,7 +23,7 @@ const ImageCarousel = () => {
         <View>
             <Carousel
                 width={width}
-                height={width * 0.6}
+                height={width * 0.5}
                 loop
                 autoPlay
                 autoPlayInterval={4000}
