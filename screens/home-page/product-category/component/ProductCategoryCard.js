@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { background_categories } from '../helper';
 
-const ProductCategoryCard = ({ image, name, backgroundColor, borderColor }) => {
+const ProductCategoryCard = ({ image, name, index }) => {
   return (
-    <View style={[styles.cardContainer, { backgroundColor, borderColor }]}>
-      <Image source={image} style={[styles.productImage, {}]} />
+    <TouchableOpacity style={[styles.cardContainer, background_categories[index]]} activeOpacity={0.7}>
+      <Image source={image} style={[styles.productImage]} />
       <Text style={styles.productText}>{name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
