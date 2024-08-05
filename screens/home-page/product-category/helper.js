@@ -2,7 +2,7 @@ export const categories = [
   {
     id: '1',
     name: 'Fruit & Vegetable',
-    image: require("../../../assets/homepage/vegitable.png"),
+    image: require("../../../assets/homepage/category/vegitable.png"),
     products: [
       { id: '1-1', name: 'Apple', price: 120, discountPrice: 110, image: 'https://via.placeholder.com/100' },
       { id: '1-2', name: 'Banana', price: 40, discountPrice: 35, image: 'https://via.placeholder.com/100' },
@@ -19,7 +19,7 @@ export const categories = [
   {
     id: '2',
     name: 'Cooking Oil & Ghee',
-    image: require("../../../assets/homepage/oil.png"),
+    image: require("../../../assets/homepage/category/oil.png"),
     products: [
       { id: '2-1', name: 'Olive Oil', price: 500, discountPrice: 450, image: 'https://via.placeholder.com/100' },
       { id: '2-2', name: 'Sunflower Oil', price: 200, discountPrice: 180, image: 'https://via.placeholder.com/100' },
@@ -36,7 +36,7 @@ export const categories = [
   {
     id: '3',
     name: 'Meat & Fish',
-    image: require("../../../assets/homepage/meat.png"),
+    image: require("../../../assets/homepage/category/meat.png"),
     products: [
       { id: '3-1', name: 'Chicken Breast', price: 250, discountPrice: 230, image: 'https://via.placeholder.com/100' },
       { id: '3-2', name: 'Salmon', price: 800, discountPrice: 750, image: 'https://via.placeholder.com/100' },
@@ -53,7 +53,7 @@ export const categories = [
   {
     id: '4',
     name: 'Bakery & Snacks',
-    image: require("../../../assets/homepage/backery.png"),
+    image: require("../../../assets/homepage/category/backery.png"),
     products: [
       { id: '4-1', name: 'Bread', price: 40, discountPrice: 35, image: 'https://via.placeholder.com/100' },
       { id: '4-2', name: 'Croissant', price: 60, discountPrice: 55, image: 'https://via.placeholder.com/100' },
@@ -70,7 +70,7 @@ export const categories = [
   {
     id: '5',
     name: 'Dairy & Eggs',
-    image: require("../../../assets/homepage/milk.png"),
+    image: require("../../../assets/homepage/category/milk.png"),
     products: [
       { id: '5-1', name: 'Whole Milk', price: 50, discountPrice: 45, image: 'https://via.placeholder.com/100' },
       { id: '5-2', name: 'Skimmed Milk', price: 45, discountPrice: 40, image: 'https://via.placeholder.com/100' },
@@ -87,7 +87,7 @@ export const categories = [
   {
     id: '6',
     name: 'Beverages',
-    image: require("../../../assets/homepage/beverage.png"),
+    image: require("../../../assets/homepage/category/beverage.png"),
     products: [
       { id: '6-1', name: 'Orange Juice', price: 100, discountPrice: 90, image: 'https://via.placeholder.com/100' },
       { id: '6-2', name: 'Apple Juice', price: 90, discountPrice: 80, image: 'https://via.placeholder.com/100' },

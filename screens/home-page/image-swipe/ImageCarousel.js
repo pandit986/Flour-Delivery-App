@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Dimensions, Image, StyleSheet } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import Animated, { Easing, useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated';
+import ContentLoader, { Rect } from 'react-content-loader/native';
 
 const { width } = Dimensions.get('window');
 
@@ -15,50 +16,68 @@ const images = [
 ];
 
 const ImageCarousel = () => {
-
     const progressValue = useSharedValue(0);
+    const [loading, setLoading] = useState(true);
 
-    console.log(progressValue, "progressValue")
+    useEffect(() => {
+        const timeout = setTimeout(() => setLoading(false), 2000); // Simulate image loading time
+        return () => clearTimeout(timeout);
+    }, []);
+
+    // Define animated styles outside of any conditional logic
+    const animatedStyles = images.map((_, index) =>
+        useAnimatedStyle(() => {
+            const backgroundColor = withTiming(progressValue.value === index ? '#FFFFFF' : '#888888', {
+                duration: 500,
+                easing: Easing.inOut(Easing.ease),
+            });
+            const dotWidth = withTiming(progressValue.value === index ? 20 : 10, {
+                duration: 700,
+                easing: Easing.inOut(Easing.ease),
+            });
+
+            return {
+                backgroundColor, width: dotWidth
+            };
+        })
+    );
+
     return (
         <View>
-            <Carousel
-                width={width}
-                height={width * 0.5}
-                loop
-                autoPlay
-                autoPlayInterval={4000}
-                onProgressChange={(progress, currentIndex) => {
-                    progressValue.value = currentIndex;
-                }}
-                data={images}
-                renderItem={({ item }) => (
-                    <Image source={{ uri: item }} style={styles.image} />
-                )}
-            />
-            <View style={styles.paginationWrapper}>
-                <View style={styles.paginationContainer}>
-                    {images.map((_, index) => {
-                        const animatedStyle = useAnimatedStyle(() => {
-                            const backgroundColor = withTiming(progressValue.value === index ? '#FFFFFF' : '#888888', {
-                                duration: 500,
-                                easing: Easing.inOut(Easing.ease),
-                            });
-                            const width = withTiming(progressValue.value === index ? 20 : 10, {
-                                duration: 700,
-                                easing: Easing.inOut(Easing.ease),
-                            });
-
-                            return {
-                                backgroundColor, width
-                            };
-                        });
-
-                        return (
-                            <Animated.View key={index} style={[styles.paginationDot, animatedStyle]} />
-                        );
-                    })}
+            {loading ? (
+                <ContentLoader
+                    viewBox={`0 0 ${width} ${width * 0.5}`}
+                    backgroundColor="#e0e0e0"
+                    foregroundColor="#f0f0f0"
+                    style={{ width, height: width * 0.5 }}
+                >
+                    <Rect x="0" y="0" rx="5" ry="5" width="100%" height="100%" />
+                </ContentLoader>
+            ) : (
+                <Carousel
+                    width={width}
+                    height={width * 0.5}
+                    loop
+                    autoPlay
+                    autoPlayInterval={4000}
+                    onProgressChange={(progress, currentIndex) => {
+                        progressValue.value = currentIndex;
+                    }}
+                    data={images}
+                    renderItem={({ item }) => (
+                        <Image source={{ uri: item }} style={styles.image} />
+                    )}
+                />
+            )}
+            {!loading && (
+                <View style={styles.paginationWrapper}>
+                    <View style={styles.paginationContainer}>
+                        {images.map((_, index) => (
+                            <Animated.View key={index} style={[styles.paginationDot, animatedStyles[index]]} />
+                        ))}
+                    </View>
                 </View>
-            </View>
+            )}
         </View>
     );
 };
@@ -84,7 +103,6 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     paginationDot: {
-        width: 5,
         height: 5,
         borderRadius: 5,
         marginHorizontal: 4,
