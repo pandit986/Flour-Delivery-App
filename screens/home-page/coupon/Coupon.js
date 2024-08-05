@@ -3,12 +3,15 @@ import React from 'react';
 import { View, Image, StyleSheet, Dimensions } from 'react-native';
 
 const Coupon = () => {
+    const screenWidth = Dimensions.get('window').width;
+    const aspectRatio = 2; // Aspect ratio of the image (width / height) it mean (2 width / 1 heigth)
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { width: screenWidth, height: screenWidth / aspectRatio }]}>
             <Image
-                source={require('../../../assets/homepage/coupon/coupon.png')} // Update this path to your coupon image
+                source={require('../../../assets/homepage/coupon/coupon.png')}
                 style={styles.couponImage}
-                resizeMode="contain"
+                resizeMode="cover"
             />
         </View>
     );
@@ -16,12 +19,12 @@ const Coupon = () => {
 
 const styles = StyleSheet.create({
     container: {
+        justifyContent: 'center',
         alignItems: 'center',
     },
     couponImage: {
-        width: Dimensions.get('window').width, 
-        height: undefined,
-        aspectRatio: 2, // Adjust the aspect ratio according to your image dimensions
+        width: '100%',
+        height: '100%',
     },
 });
 

@@ -18,10 +18,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 4,
     borderWidth: 1,
-    // shadowColor: '#000',
-    // shadowOpacity: 0.1,
     shadowRadius: 10,
-    // elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    elevation: 1
   },
   productImage: {
     width: 100,
