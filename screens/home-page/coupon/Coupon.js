@@ -1,16 +1,39 @@
-// components/Coupon.js
-import React from 'react';
-import { View, Image, StyleSheet, Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Dimensions, Animated } from 'react-native';
 
 const Coupon = () => {
+    const [fadeAnim] = useState(new Animated.Value(0));
+    const [scaleAnim] = useState(new Animated.Value(0.5)); // Start from half the size
+
+    useEffect(() => {
+        Animated.parallel([
+            Animated.timing(fadeAnim, {
+                toValue: 1,
+                duration: 2000,
+                useNativeDriver: true,
+            }),
+            Animated.timing(scaleAnim, {
+                toValue: 1,
+                duration: 2000,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    }, [fadeAnim, scaleAnim]);
+
     const screenWidth = Dimensions.get('window').width;
-    const aspectRatio = 2; // Aspect ratio of the image (width / height) it mean (2 width / 1 heigth)
+    const aspectRatio = 2.2;
 
     return (
         <View style={[styles.container, { width: screenWidth, height: screenWidth / aspectRatio }]}>
-            <Image
+            <Animated.Image
                 source={require('../../../assets/homepage/coupon/coupon.png')}
-                style={styles.couponImage}
+                style={[
+                    styles.couponImage,
+                    {
+                        opacity: fadeAnim,
+                        transform: [{ scale: scaleAnim }]
+                    }
+                ]}
                 resizeMode="cover"
             />
         </View>
