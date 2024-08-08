@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList, Modal, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; 
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const CategoryModal = ({ visible, onClose, category }) => {
     const renderProductCard = ({ item }) => (
@@ -103,6 +103,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 120,
         resizeMode: 'cover',
+        //contain
+
     },
     productName: {
         fontSize: 16,
@@ -125,18 +127,18 @@ const styles = StyleSheet.create({
     discountPrice: {
         fontSize: 16,
         color: '#FF6347',
-        fontFamily:'san-bold'
+        fontFamily: 'san-bold'
     },
     originalPrice: {
         fontSize: 14,
         color: '#888',
         textDecorationLine: 'line-through',
-        fontFamily:'san'
+        fontFamily: 'san'
     },
     discountPercentage: {
         fontSize: 14,
         color: '#FF6347',
-        fontFamily:'san'
+        fontFamily: 'san'
     },
 });
 

@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
     padding: 4,
     borderWidth: 1,
     shadowRadius: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    elevation: 1
+    // shadowColor: '#000',
+    // shadowOpacity: 0.1,
+    // elevation: 1
   },
   productImage: {
     width: 100,
