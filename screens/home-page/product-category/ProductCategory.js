@@ -24,12 +24,13 @@ const ProductCategory = () => {
                             <ProductCategoryCardSkeleton />
                         </View>
                     ))
-                    : categories.map((item, index) => (
+                    : categories?.map((item, index) => (
                         <View key={item.id} style={styles.item}>
                             <ProductCategoryCard
                                 image={item.image}
                                 name={item.name}
                                 index={index + 1}
+                                products={item.products}
                             />
                         </View>
                     ))}
@@ -53,10 +54,10 @@ const styles = StyleSheet.create({
         flexBasis: '45%', // This makes each item take up roughly half the width, minus margins
         marginBottom: 8,
     },
-    title:{
-        textAlign:'center',
-        fontSize:18,
-        fontFamily:'san-bold'
+    title: {
+        textAlign: 'center',
+        fontSize: 18,
+        fontFamily: 'san-bold'
     }
 });
 
