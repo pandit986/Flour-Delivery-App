@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList, Modal, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Import icons from vector library
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
 
 const CategoryModal = ({ visible, onClose, category }) => {
     const renderProductCard = ({ item }) => (
@@ -70,14 +70,14 @@ const styles = StyleSheet.create({
         fontFamily: 'san-bold'
     },
     scrollViewContainer: {
-        padding: 10,
+        padding: 5,
     },
     columnWrapper: {
         justifyContent: 'space-between',
     },
     card: {
-        width: '48%',
-        marginVertical: 10,
+        width: '49.5%',
+        marginVertical: 5,
         backgroundColor: 'white',
         borderRadius: 10,
         overflow: 'hidden',
@@ -86,34 +86,34 @@ const styles = StyleSheet.create({
     },
     bestsellerLabel: {
         position: 'absolute',
-        top: 10,
-        left: 10,
+        top: 5,
+        left: 5,
         backgroundColor: '#FF6347',
-        paddingVertical: 5,
-        paddingHorizontal: 10,
+        paddingVertical: 2,
+        paddingHorizontal: 8,
         borderRadius: 5,
         zIndex: 1,
     },
     bestsellerText: {
         color: 'white',
-        fontSize: 12,
+        fontSize: 10,
         fontWeight: 'bold',
     },
     productImage: {
         width: '100%',
-        height: 100,
+        height: 120,
         resizeMode: 'cover',
     },
     productName: {
         fontSize: 16,
-        fontWeight: 'bold',
-        marginVertical: 5,
         paddingHorizontal: 10,
+        fontFamily:'san-medium'
     },
     productDescription: {
-        fontSize: 14,
+        fontSize: 12,
         color: '#555',
         paddingHorizontal: 10,
+        fontFamily:'san'
     },
     priceContainer: {
         flexDirection: 'row',
@@ -124,17 +124,19 @@ const styles = StyleSheet.create({
     },
     discountPrice: {
         fontSize: 16,
-        fontWeight: 'bold',
         color: '#FF6347',
+        fontFamily:'san-bold'
     },
     originalPrice: {
         fontSize: 14,
         color: '#888',
         textDecorationLine: 'line-through',
+        fontFamily:'san'
     },
     discountPercentage: {
         fontSize: 14,
         color: '#FF6347',
+        fontFamily:'san'
     },
 });
 
