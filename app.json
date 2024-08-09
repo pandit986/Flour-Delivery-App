@@ -14,12 +14,15 @@
     "ios": {
       "supportsTablet": true
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.pandit986.ChakkiFreshAata"
     },
     "web": {
       "favicon": "./assets/favicon.png"
