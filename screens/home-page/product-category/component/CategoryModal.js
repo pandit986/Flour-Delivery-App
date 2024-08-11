@@ -1,16 +1,23 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, FlatList, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Modal, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Image } from 'expo-image';
 
 const CategoryModal = ({ visible, onClose, category }) => {
     const renderProductCard = ({ item }) => (
-        <View style={styles.card}>
+        <TouchableOpacity style={styles.card} activeOpacity={0.7}>
             {item.bestseller && (
                 <View style={styles.bestsellerLabel}>
                     <Text style={styles.bestsellerText}>Bestseller</Text>
                 </View>
             )}
-            <Image source={{ uri: item.image }} style={styles.productImage} />
+            {/* <Image source={{ uri: item.image }} style={styles.productImage} /> */}
+            <Image
+                source={{ uri: item.image }}
+                style={styles.productImage}
+                contentFit="contain"  // equivalent to resizeMode
+                transition={500}    // Optional: smooth transition when loading
+            />
             <Text style={styles.productName}>{item.name}</Text>
             <Text style={styles.productDescription}>{item.description}</Text>
             <View style={styles.priceContainer}>
@@ -20,7 +27,7 @@ const CategoryModal = ({ visible, onClose, category }) => {
                     {Math.round(((item.price - item.discountPrice) / item.price) * 100)}% off
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 
     return (
@@ -102,20 +109,20 @@ const styles = StyleSheet.create({
     productImage: {
         width: '100%',
         height: 120,
-        resizeMode: 'cover',
+        // resizeMode: 'cover',
         //contain
 
     },
     productName: {
         fontSize: 16,
         paddingHorizontal: 10,
-        fontFamily:'san-medium'
+        fontFamily: 'san-medium'
     },
     productDescription: {
         fontSize: 12,
         color: '#555',
         paddingHorizontal: 10,
-        fontFamily:'san'
+        fontFamily: 'san'
     },
     priceContainer: {
         flexDirection: 'row',
