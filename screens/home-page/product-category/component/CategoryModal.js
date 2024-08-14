@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Modal, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Image } from 'expo-image';
+import ProductDetailModal from '../../../product-detail-page/ProductDetailModal';
+
+const product = {
+    id: '6-1',
+    name: 'Orange Juice',
+    price: 100,
+    discountPrice: 90,
+    image: ['https://img.freepik.com/free-photo/red-apple-isolated_74190-1286.jpg?t=st=1723093494~exp=1723097094~hmac=3249d5344bcbc890d6e5b29688b59d32e43b9beaf9665d9672a5d7aa41c59632&w=740', 'https://placehold.co/800x550', 'https://placehold.co/800x550', 'https://placehold.co/800x550'],
+    bestseller: true,
+    description: 'Freshly squeezed orange juice.',
+    stock_quantity: '100kg',
+};
 
 const CategoryModal = ({ visible, onClose, category }) => {
+
+    //state
+    const [productDetailModal, setProductDetailModal] = useState(false);
+
     const renderProductCard = ({ item }) => (
-        <TouchableOpacity style={styles.card} activeOpacity={0.7}>
+        <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={() => setProductDetailModal(true)}>
             {item.bestseller && (
                 <View style={styles.bestsellerLabel}>
                     <Text style={styles.bestsellerText}>Bestseller</Text>
@@ -51,6 +67,7 @@ const CategoryModal = ({ visible, onClose, category }) => {
                     contentContainerStyle={styles.scrollViewContainer}
                 />
             </View>
+            <ProductDetailModal visible={productDetailModal} onClose={() => setProductDetailModal(false)} product={product} />
         </Modal>
     );
 };
