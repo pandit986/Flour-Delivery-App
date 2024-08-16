@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { background_categories } from '../helper';
-import CategoryModal from './CategoryModal';
+import CategoryModal from './modal/CategoryModal';
 
 const ProductCategoryCard = ({ image, name, index, products }) => {
   const [modalVisible, setModalVisible] = useState(false);
