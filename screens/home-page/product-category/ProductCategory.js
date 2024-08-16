@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, View, StyleSheet, Text } from 'react-native';
 import ProductCategoryCard from './component/ProductCategoryCard';
 import { categories } from './helper';
-import ProductCategoryCardSkeleton from './component/ProductCategoryCardSkeleton';
+import ProductCategoryCardSkeleton from './component/skeleton/ProductCategoryCardSkeleton';
 
 const ProductCategory = () => {
 

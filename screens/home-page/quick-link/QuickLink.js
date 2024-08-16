@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import QuickLinkSkeleton from './QuickLinkSkeleton';
 import { background_quick_link, data } from './helper';
+import QuickLinkSkeleton from './skeleton/QuickLinkSkeleton';
 
 const QuickLink = () => {
     const screenWidth = Dimensions.get('window').width * 0.8;
