@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Modal, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Image } from 'expo-image';
+import CategoryModalSkeleton from '../skeleton/CategoryModalSkeleton';
 
 const product = {
     id: '6-1',
@@ -17,6 +18,12 @@ const product = {
 const CategoryModal = ({ visible, onClose, category }) => {
 
     //state
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 2000);
+        return () => clearTimeout(timer);
+    }, []);
 
     const renderProductCard = ({ item }) => (
         <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={() => ({})}>
@@ -56,14 +63,25 @@ const CategoryModal = ({ visible, onClose, category }) => {
                         <Icon name="shopping-bag" size={24} color="#000" />
                     </TouchableOpacity>
                 </View>
-                <FlatList
-                    data={category}
-                    renderItem={renderProductCard}
-                    keyExtractor={(item) => item.id}
-                    numColumns={2}
-                    columnWrapperStyle={styles.columnWrapper}
-                    contentContainerStyle={styles.scrollViewContainer}
-                />
+                {isLoading ? (
+                    <FlatList
+                        data={Array(10).fill({})}
+                        renderItem={() => <CategoryModalSkeleton />}
+                        keyExtractor={(item, index) => index.toString()}
+                        numColumns={2}
+                        columnWrapperStyle={styles.columnWrapper}
+                        contentContainerStyle={styles.scrollViewContainer}
+                    />
+                ) : (
+                    <FlatList
+                        data={category}
+                        renderItem={renderProductCard}
+                        keyExtractor={(item) => item.id}
+                        numColumns={2}
+                        columnWrapperStyle={styles.columnWrapper}
+                        contentContainerStyle={styles.scrollViewContainer}
+                    />
+                )}
             </View>
         </Modal>
     );

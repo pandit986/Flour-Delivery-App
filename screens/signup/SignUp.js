@@ -184,7 +184,7 @@ const SignUpScreen = ({ navigation }) => {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-      <TermsAndConditionsModal visible={termsVisible} onDismiss={() => setTermsVisible(false)} />
+      {!!termsVisible && <TermsAndConditionsModal visible={termsVisible} onDismiss={() => setTermsVisible(false)} />}
     </>
   );
 };

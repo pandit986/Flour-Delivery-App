@@ -12,12 +12,7 @@ const ProductCategoryCard = ({ image, name, index, products }) => {
         <Image source={image} style={[styles.productImage]} />
         <Text style={styles.productText}>{name}</Text>
       </TouchableOpacity>
-      <CategoryModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        category={products}
-      />
-
+      {!!modalVisible && <CategoryModal visible={modalVisible} onClose={() => setModalVisible(false)} category={products} />}
     </>
   );
 };
