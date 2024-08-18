@@ -17,10 +17,9 @@ const product = {
 const CategoryModal = ({ visible, onClose, category }) => {
 
     //state
-    const [productDetailModal, setProductDetailModal] = useState(false);
 
     const renderProductCard = ({ item }) => (
-        <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={() => setProductDetailModal(true)}>
+        <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={() => ({})}>
             {item.bestseller && (
                 <View style={styles.bestsellerLabel}>
                     <Text style={styles.bestsellerText}>Bestseller</Text>
