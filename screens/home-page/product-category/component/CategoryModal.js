@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Modal, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Image } from 'expo-image';
-import ProductDetailModal from '../../../product-detail-page/ProductDetailModal';
 
 const product = {
     id: '6-1',
@@ -67,7 +66,6 @@ const CategoryModal = ({ visible, onClose, category }) => {
                     contentContainerStyle={styles.scrollViewContainer}
                 />
             </View>
-            <ProductDetailModal visible={productDetailModal} onClose={() => setProductDetailModal(false)} product={product} />
         </Modal>
     );
 };
