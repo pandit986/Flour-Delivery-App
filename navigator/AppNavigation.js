@@ -10,6 +10,7 @@ import ForgotPassword from '../screens/login/ForgotPassword';
 import LoginPage from '../screens/login/LoginPage';
 import MainTabNavigator from './MainTabNavigator';
 import LocationScreen from '../screens/header/location/LocationScreen';
+import ProductDetailScreen from '../screens/product-detail-page/ProductDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ function AppNavigation() {
 
                 <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
                 <Stack.Screen name="LocationScreen" component={LocationScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="ProductScreen" component={ProductDetailScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Main" component={MainTabNavigator} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>

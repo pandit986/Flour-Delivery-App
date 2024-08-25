@@ -1,32 +1,65 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Modal, TouchableOpacity, BackHandler } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Image } from 'expo-image';
 import CategoryModalSkeleton from '../skeleton/CategoryModalSkeleton';
-
-const product = {
-    id: '6-1',
-    name: 'Orange Juice',
-    price: 100,
-    discountPrice: 90,
-    image: ['https://img.freepik.com/free-photo/red-apple-isolated_74190-1286.jpg?t=st=1723093494~exp=1723097094~hmac=3249d5344bcbc890d6e5b29688b59d32e43b9beaf9665d9672a5d7aa41c59632&w=740', 'https://placehold.co/800x550', 'https://placehold.co/800x550', 'https://placehold.co/800x550'],
-    bestseller: true,
-    description: 'Freshly squeezed orange juice.',
-    stock_quantity: '100kg',
-};
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 const CategoryModal = ({ visible, onClose, category }) => {
 
     //state
     const [isLoading, setIsLoading] = useState(true);
+    const [modalVisible, setModalVisible] = useState(visible);
+    const navigation = useNavigation();
 
     useEffect(() => {
         const timer = setTimeout(() => setIsLoading(false), 2000);
         return () => clearTimeout(timer);
     }, []);
 
+    // Manage the visibility state with useFocusEffect
+    useFocusEffect(
+        React.useCallback(() => {
+            if (visible) {
+                setModalVisible(true);
+            }
+            const onBackPress = () => {
+                if (modalVisible) {
+                    setModalVisible(false);
+                    return true;
+                }
+                return false;
+            };
+
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+            return () =>
+                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }, [modalVisible, visible])
+    );
+
+    const handleProductClick = () => {
+        const product = {
+            id: '6-1',
+            name: 'Orange Juice',
+            price: 100,
+            discountPrice: 90,
+            image: ['https://img.freepik.com/free-photo/red-apple-isolated_74190-1286.jpg?t=st=1723093494~exp=1723097094~hmac=3249d5344bcbc890d6e5b29688b59d32e43b9beaf9665d9672a5d7aa41c59632&w=740', 'https://placehold.co/800x550', 'https://placehold.co/800x550', 'https://placehold.co/800x550'],
+            bestseller: true,
+            description: 'Freshly squeezed orange juice.',
+            stock_quantity: '100kg',
+        };
+        setModalVisible(false);
+        navigation.navigate('ProductScreen', { product });
+    };
+
+    const handleClose = () => {
+        setModalVisible(false);
+        onClose();
+    };
+
     const renderProductCard = ({ item }) => (
-        <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={() => ({})}>
+        <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={() => handleProductClick()}>
             {item.bestseller && (
                 <View style={styles.bestsellerLabel}>
                     <Text style={styles.bestsellerText}>Bestseller</Text>
@@ -52,10 +85,10 @@ const CategoryModal = ({ visible, onClose, category }) => {
     );
 
     return (
-        <Modal visible={visible} onRequestClose={onClose} transparent={false} animationType="slide">
+        <Modal visible={modalVisible} onRequestClose={handleClose} transparent={false} animationType="fade">
             <View style={styles.modalContainer}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={onClose} style={styles.headerIcon}>
+                    <TouchableOpacity onPress={handleClose} style={styles.headerIcon}>
                         <Icon name="arrow-back" size={24} color="#000" />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Category</Text>
