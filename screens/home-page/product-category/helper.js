@@ -112,6 +112,16 @@ export const background_categories = {
   6: { backgroundColor: 'rgba(183, 223, 245, 0.3)', borderColor: '#B7DFF5' },
 }
 
-
-
-
+export const product = {
+  id: '6-1',
+  name: 'Orange Juice',
+  price: 100,
+  discountPrice: 90,
+  image: ['https://img.freepik.com/free-photo/red-apple-isolated_74190-1286.jpg?t=st=1723093494~exp=1723097094~hmac=3249d5344bcbc890d6e5b29688b59d32e43b9beaf9665d9672a5d7aa41c59632&w=740',
+    'https://img.freepik.com/free-vector/vector-ripe-yellow-banana-bunch-isolated-white-background_1284-45456.jpg?t=st=1723091896~exp=1723095496~hmac=2f5b9918ab90c0463e4d1a5d2f5b967f25de4c3e9da0f73076e22276e71c7415&w=740',
+    'https://img.freepik.com/free-vector/fresh-tomato_1053-566.jpg?t=st=1723092078~exp=1723095678~hmac=71651a97324ffafbdcdf4599e4147eeeccb9b966c273c44b2e213f58b627175a&w=740',
+    'https://img.freepik.com/free-vector/isolated-orange-carrot-cartoon_1308-127216.jpg?t=st=1723092156~exp=1723095756~hmac=5f0ad018e21bad7e91f42addf3f73747ddaf7509be413e0d495ffbffe7b2bce7&w=740'],
+  bestseller: true,
+  description: 'Freshly squeezed orange juice.',
+  stock_quantity: '100kg',
+};

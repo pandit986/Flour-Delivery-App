@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { background_categories } from '../helper';
-import CategoryModal from './modal/CategoryModal';
+import { useNavigation } from '@react-navigation/native';
 
 const ProductCategoryCard = ({ image, name, index, products }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
 
   return (
     <>
-      <TouchableOpacity style={[styles.cardContainer, background_categories[index]]} activeOpacity={0.7} onPress={() => setModalVisible(true)} >
+      <TouchableOpacity style={[styles.cardContainer, background_categories[index]]} activeOpacity={0.7} onPress={() => navigation.navigate('CategoryScreen', { category: products })} >
         <Image source={image} style={[styles.productImage]} />
         <Text style={styles.productText}>{name}</Text>
       </TouchableOpacity>
-      {!!modalVisible && <CategoryModal visible={modalVisible} onClose={() => setModalVisible(false)} category={products} />}
     </>
   );
 };

@@ -11,6 +11,8 @@ import LoginPage from '../screens/login/LoginPage';
 import MainTabNavigator from './MainTabNavigator';
 import LocationScreen from '../screens/header/location/LocationScreen';
 import ProductDetailScreen from '../screens/product-detail-page/ProductDetailScreen';
+import CategoryScreen from '../screens/home-page/product-category/component/CategoryScreen';
+import CommonHeader from '../screens/home-page/product-category/component/CommonHeader';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +28,22 @@ function AppNavigation() {
 
                 <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
                 <Stack.Screen name="LocationScreen" component={LocationScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="ProductScreen" component={ProductDetailScreen} options={{ headerShown: false }} />
+                {/* <Stack.Screen name="CategoryScreen" component={CategoryScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="ProductScreen" component={ProductDetailScreen} options={{ headerShown: false }} /> */}
+                <Stack.Screen
+                    name="CategoryScreen"
+                    component={CategoryScreen}
+                    options={({ navigation, route }) => ({
+                        header: () => <CommonHeader navigation={navigation} title={route.params.categoryName} />,
+                    })}
+                />
+                <Stack.Screen
+                    name="ProductScreen"
+                    component={ProductDetailScreen}
+                    options={({ navigation, route }) => ({
+                        header: () => <CommonHeader navigation={navigation} title="Product Details" />,
+                    })}
+                />
                 <Stack.Screen name="Main" component={MainTabNavigator} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>

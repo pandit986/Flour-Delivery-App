@@ -17,16 +17,6 @@ const ProductDetailScreen = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <FontAwesome name="arrow-left" size={24} color="black" />
-                </TouchableOpacity>
-                <Text style={styles.title}>{product.name}</Text>
-                <TouchableOpacity>
-                    <FontAwesome name="shopping-cart" size={24} color="black" />
-                </TouchableOpacity>
-            </View>
-
             <ScrollView>
                 <ProductPageImageCarousel images={product.image} bestseller={product.bestseller} />
                 <Text style={styles.description}>{product.description}</Text>
@@ -52,18 +42,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-    },
-    header: {
-        height: 60,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 15,
-        backgroundColor: '#f8f8f8',
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
     },
     description: {
         padding: 15,
