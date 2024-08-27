@@ -18,7 +18,7 @@ const CategoryScreen = ({ route }) => {
     }, []);
 
     const renderProductCard = ({ item }) => (
-        <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={() => navigation.navigate('ProductScreen', { product: product })}>
+        <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={() => navigation.navigate('ProductScreen', { product: product, title: product.name })}>
             {item.bestseller && (
                 <View style={styles.bestsellerLabel}>
                     <Text style={styles.bestsellerText}>Bestseller</Text>

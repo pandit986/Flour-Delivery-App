@@ -8,7 +8,7 @@ const ProductCategoryCard = ({ image, name, index, products }) => {
 
   return (
     <>
-      <TouchableOpacity style={[styles.cardContainer, background_categories[index]]} activeOpacity={0.7} onPress={() => navigation.navigate('CategoryScreen', { category: products })} >
+      <TouchableOpacity style={[styles.cardContainer, background_categories[index]]} activeOpacity={0.7} onPress={() => navigation.navigate('CategoryScreen', { category: products, title: name })} >
         <Image source={image} style={[styles.productImage]} />
         <Text style={styles.productText}>{name}</Text>
       </TouchableOpacity>

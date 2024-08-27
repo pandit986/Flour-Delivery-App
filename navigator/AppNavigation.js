@@ -34,14 +34,14 @@ function AppNavigation() {
                     name="CategoryScreen"
                     component={CategoryScreen}
                     options={({ navigation, route }) => ({
-                        header: () => <CommonHeader navigation={navigation} title={route.params.categoryName} />,
+                        header: () => <CommonHeader navigation={navigation} title={route.params.title} />,
                     })}
                 />
                 <Stack.Screen
                     name="ProductScreen"
                     component={ProductDetailScreen}
                     options={({ navigation, route }) => ({
-                        header: () => <CommonHeader navigation={navigation} title="Product Details" />,
+                        header: () => <CommonHeader navigation={navigation} title={route.params.title} />,
                     })}
                 />
                 <Stack.Screen name="Main" component={MainTabNavigator} options={{ headerShown: false }} />
