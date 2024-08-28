@@ -41,7 +41,9 @@ const ProductDetailScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#F2F2F2',
+        backgroundColor: 'gray',
+
     },
     description: {
         padding: 15,
