@@ -2,8 +2,13 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Badge } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 
 const CommonHeader = ({ navigation, title }) => {
+
+    //slice
+    const { items } = useSelector((state) => state.cart);
+
     return (
         <View style={styles.headerContainer}>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconContainer}>
@@ -12,7 +17,7 @@ const CommonHeader = ({ navigation, title }) => {
             <Text style={styles.title}>{title}</Text>
             <TouchableOpacity style={styles.iconContainer}>
                 <Icon name="shopping-bag" size={24} color="#000" />
-                <Badge style={styles.badge}>3</Badge>
+                {items.length > 0 && <Badge style={styles.badge}>{items.length}</Badge>}
             </TouchableOpacity>
         </View>
     );
@@ -28,7 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
-        paddingTop:25
+        paddingTop: 25
     },
     iconContainer: {
         padding: 5,

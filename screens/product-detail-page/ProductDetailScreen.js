@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProductPageImageCarousel from './component/ProductPageImageCarousel';
 import PackageSizeSelector from './component/PackageSizeSelector';
 import { addToCart } from './action/cartSlice';
+import ProductDescription from './component/ProductDescription';
 
 const ProductDetailScreen = ({ route, navigation }) => {
     const { product } = route.params;
@@ -12,6 +13,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
     const [quantity, setQuantity] = useState(1);
     const [selectedPackage, setSelectedPackage] = useState(null);
 
+    const { items } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -31,14 +33,14 @@ const ProductDetailScreen = ({ route, navigation }) => {
                 quantity,
             };
             dispatch(addToCart(cartItem));
-        } else {
-            alert('Please select a package size');
+            setSelectedPackage(null);
+            setQuantity(1);
         }
     };
 
     return (
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ paddingBottom: showFooter ? 100 : 0 }}>
                 <View style={styles.topContainer}>
                     <ProductPageImageCarousel images={product.image} bestseller={product.bestseller} discountPrice={Math.round(((product.price - product.discountPrice) / product.price) * 100)} />
                     <View style={styles.headerContainer}>
@@ -48,7 +50,12 @@ const ProductDetailScreen = ({ route, navigation }) => {
                             <Text style={styles.discountPrice}>₹{product.discountPrice}/kg</Text>
                         </View>
                     </View>
+                </View>
+                <View style={styles.topContainer}>
                     <PackageSizeSelector selectedPackage={selectedPackage} onSelectPackage={setSelectedPackage} />
+                </View>
+                <View>
+                    <ProductDescription description={product.description}></ProductDescription>
                 </View>
             </ScrollView >
 
@@ -63,7 +70,14 @@ const ProductDetailScreen = ({ route, navigation }) => {
                             <FontAwesome name="plus" size={24} color="black" />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.addToCart} onPress={handleAddToCart}>
+                    <TouchableOpacity
+                        style={[
+                            styles.addToCart,
+                            !selectedPackage && styles.disabledAddToCart
+                        ]}
+                        onPress={handleAddToCart}
+                        disabled={!selectedPackage}
+                    >
                         <Text style={styles.addToCartText}>Add to Cart</Text>
                     </TouchableOpacity>
                 </View>
@@ -139,6 +153,9 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    disabledAddToCart: {
+        backgroundColor: '#ccc',
     },
 });
 

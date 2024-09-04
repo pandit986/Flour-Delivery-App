@@ -1,53 +1,106 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const packageSizes = [
-    { size: '1kg', price: 100 },
-    { size: '2kg', price: 180 },
-    { size: '5kg', price: 400 },
+const { width } = Dimensions.get('window');
+
+const packages = [
+    { size: '1', price: '100', gradientColors: ['#D8E3FF', '#F5DAF9'] },
+    { size: '2', price: '180', gradientColors: ['#FFDDCA', '#FFEAD9'] },
+    { size: '5', price: '300', gradientColors: ['#E6EBE5', '#CCFCCA'] },
 ];
 
 const PackageSizeSelector = ({ selectedPackage, onSelectPackage }) => {
     return (
-        <View style={styles.container}>
-            {packageSizes.map((pkg, index) => (
-                <TouchableOpacity key={index} onPress={() => onSelectPackage(pkg)}>
-                    <LinearGradient
-                        colors={selectedPackage?.size === pkg.size ? ['#ff6347', '#ff4500'] : ['#e0e0e0', '#bdbdbd']}
-                        style={styles.package}
+        <View style={{ marginVertical: 10 }}>
+            <View style={styles.packageTextConatainer}>
+                <View>
+                    <Text style={styles.packageText}>Package Size</Text>
+                    <Text style={styles.selectOne}>Select one option</Text>
+                </View>
+                <Text style={styles.requireContainer}>Required</Text>
+            </View>
+            <View style={styles.packageContainer}>
+                {packages.map((pkg) => (
+                    <TouchableOpacity
+                        key={pkg.size}
+                        style={[
+                            styles.package,
+                            {
+                                borderColor: (selectedPackage && selectedPackage.size === pkg.size) ? "#8C3F6D" : "#fff",
+                                width: (width / packages.length) - 10
+                            }]}
+                        onPress={() => onSelectPackage(pkg)}
+                        activeOpacity={0.8}
                     >
-                        <Text style={styles.packageSize}>{pkg.size}</Text>
-                        <Text style={styles.packagePrice}>₹{pkg.price}</Text>
-                    </LinearGradient>
-                </TouchableOpacity>
-            ))}
+                        <LinearGradient
+                            colors={pkg.gradientColors}
+                            style={styles.gradient}
+                            start={[0, 0]}
+                            end={[1, 1]}
+                        >
+                            <Text style={styles.packageSize}>{pkg.size} KG</Text>
+                            <Text style={styles.packagePrice}>₹{pkg.price}</Text>
+                        </LinearGradient>
+                    </TouchableOpacity>
+                ))}
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
+    packageContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-        marginVertical: 10,
+        justifyContent: 'space-around',
+        // marginVertical: 10,
+        flexWrap: 'nowrap',
     },
     package: {
-        alignItems: 'center',
-        paddingVertical: 15,
-        paddingHorizontal: 25,
+        height: 100,
         borderRadius: 10,
+        overflow: 'hidden',
+        borderWidth: 4,
+    },
+    gradient: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     packageSize: {
-        fontSize: 16,
-        color: '#fff',
-        fontWeight: 'bold',
+        fontSize: 22,
+        color: '#214583',
+        fontFamily: 'san-bold'
     },
     packagePrice: {
         fontSize: 14,
-        color: '#fff',
+        color: '#2B3852',
+        fontFamily: 'san-bold'
     },
+    packageTextConatainer: {
+        flexDirection: 'row',
+        marginHorizontal: 10,
+        justifyContent: 'space-between',
+    },
+    packageText: {
+        fontFamily: 'san-bold',
+        fontSize: 14
+    },
+    selectOne: {
+        fontFamily: 'san',
+        fontSize: 12
+    },
+    requireContainer: {
+        borderColor: '#FF8C19',
+        borderWidth: 1,
+        padding: 5,
+        borderRadius: 8,
+        backgroundColor: '#FFF3CC',
+        color: '#FF8C19',
+        height: 30,
+        fontFamily: 'san',
+        fontSize: 12
+    }
 });
 
 export default PackageSizeSelector;

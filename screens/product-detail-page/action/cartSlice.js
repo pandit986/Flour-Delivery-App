@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 
 const initialState = {
     items: [],
+    value: true
 };
 
 const cartSlice = createSlice({

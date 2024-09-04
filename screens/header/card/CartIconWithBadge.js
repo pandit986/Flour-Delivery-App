@@ -5,13 +5,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
 
 const CartIconWithBadge = () => {
-    const cartItems = useSelector((state) => state.cart.items);
-    const cartItemCount = cartItems.length;
+    const { items } = useSelector((state) => state.cart);
 
     return (
         <View style={{ width: 24, height: 24, margin: 5 }}>
             <Ionicons name="cart" size={25} color="#000" />
-            {cartItemCount > 0 && (
+            {items.length > 0 && (
                 <Badge
                     size={18}
                     style={{
@@ -21,7 +20,7 @@ const CartIconWithBadge = () => {
                         backgroundColor: 'red',
                     }}
                 >
-                    {cartItemCount}
+                    {items.length}
                 </Badge>
             )}
         </View>

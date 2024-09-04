@@ -5,9 +5,9 @@ import locationReducer from "../screens/header/location/locationSlice"
 import cartSlice from '../screens/product-detail-page/action/cartSlice'
 
 const rootReducer = combineReducers({
-    cart: cartReducer,
+    // cart: cartReducer,
     location: locationReducer,
-    shoping_card: cartSlice,
+    cart: cartSlice,
 });
 
 export default rootReducer;
