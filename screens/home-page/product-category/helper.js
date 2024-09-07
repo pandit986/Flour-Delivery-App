@@ -122,6 +122,6 @@ export const product = {
     'https://img.freepik.com/free-vector/fresh-tomato_1053-566.jpg?t=st=1723092078~exp=1723095678~hmac=71651a97324ffafbdcdf4599e4147eeeccb9b966c273c44b2e213f58b627175a&w=740',
     'https://img.freepik.com/free-vector/isolated-orange-carrot-cartoon_1308-127216.jpg?t=st=1723092156~exp=1723095756~hmac=5f0ad018e21bad7e91f42addf3f73747ddaf7509be413e0d495ffbffe7b2bce7&w=740'],
   bestseller: true,
-  description: 'Freshly squeezed orange juice.',
+  description: 'Freshly squeezed orange juice is a vibrant and refreshing beverage that captures the essence of sun-ripened oranges. Bursting with flavor, our orange juice is made from the finest, handpicked oranges, ensuring a perfect balance of sweetness and tanginess in every sip. Rich in vitamin C and antioxidants, it not only delights your taste buds but also supports your immune system and overall health.',
   stock_quantity: '100kg',
 };

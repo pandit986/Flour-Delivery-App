@@ -42,7 +42,7 @@ const ProductCategory = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f0f0f0',
+        // backgroundColor: '#f0f0f0',
         padding: 8,
     },
     grid: {

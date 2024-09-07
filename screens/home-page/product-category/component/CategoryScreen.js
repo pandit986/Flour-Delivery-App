@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     },
     discountPrice: {
         fontSize: 16,
-        color: '#FF6347',
+        color: '#000',
         fontFamily: 'san-bold'
     },
     originalPrice: {
