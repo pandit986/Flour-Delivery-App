@@ -5,9 +5,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 const { width } = Dimensions.get('window');
 
 const packages = [
-    { size: '1', price: '100', gradientColors: ['#D8E3FF', '#F5DAF9'] },
-    { size: '2', price: '180', gradientColors: ['#FFDDCA', '#FFEAD9'] },
-    { size: '5', price: '300', gradientColors: ['#E6EBE5', '#CCFCCA'] },
+    { size: '1', price: 100, gradientColors: ['#D8E3FF', '#F5DAF9'] },
+    { size: '2', price: 180, gradientColors: ['#FFDDCA', '#FFEAD9'] },
+    { size: '5', price: 300, gradientColors: ['#E6EBE5', '#CCFCCA'] },
 ];
 
 const PackageSizeSelector = ({ selectedPackage, onSelectPackage }) => {
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     packageContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        // marginVertical: 10,
         flexWrap: 'nowrap',
     },
     package: {
