@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductPageImageCarousel from './component/ProductPageImageCarousel';
 import PackageSizeSelector from './component/PackageSizeSelector';
 import { addToCart } from './action/cartSlice';
 import ProductDescription from './component/ProductDescription';
+import Footer from './component/Footer';  // Import the Footer component
 
 const ProductDetailScreen = ({ route, navigation }) => {
     const { product } = route.params;
     const [showFooter, setShowFooter] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const [selectedPackage, setSelectedPackage] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
 
     const { items } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
             dispatch(addToCart(cartItem));
             setSelectedPackage(null);
             setQuantity(1);
+            setShowPopup(true);
         }
     };
 
@@ -57,32 +59,17 @@ const ProductDetailScreen = ({ route, navigation }) => {
                 <View>
                     <ProductDescription description={product.description}></ProductDescription>
                 </View>
-            </ScrollView >
+            </ScrollView>
 
             {showFooter && (
-                <View style={styles.footer}>
-                    <View style={styles.quantitySelector}>
-                        <TouchableOpacity onPress={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}>
-                            <FontAwesome name="minus" size={24} color="black" />
-                        </TouchableOpacity>
-                        <Text style={styles.quantity}>{quantity}</Text>
-                        <TouchableOpacity onPress={() => setQuantity(quantity + 1)}>
-                            <FontAwesome name="plus" size={24} color="black" />
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity
-                        style={[
-                            styles.addToCart,
-                            !selectedPackage && styles.disabledAddToCart
-                        ]}
-                        onPress={handleAddToCart}
-                        disabled={!selectedPackage}
-                    >
-                        <Text style={styles.addToCartText}>Add to Cart</Text>
-                    </TouchableOpacity>
-                </View>
+                <Footer
+                    quantity={quantity}
+                    setQuantity={setQuantity}
+                    handleAddToCart={handleAddToCart}
+                    selectedPackage={selectedPackage}
+                />
             )}
-        </View >
+        </View>
     );
 };
 
@@ -121,41 +108,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10,
-    },
-    footer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 15,
-        backgroundColor: '#f8f8f8',
-        borderTopWidth: 1,
-        borderTopColor: '#ddd',
-    },
-    quantitySelector: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    quantity: {
-        fontSize: 20,
-        marginHorizontal: 10,
-    },
-    addToCart: {
-        backgroundColor: '#ff6347',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-    },
-    addToCartText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    disabledAddToCart: {
-        backgroundColor: '#ccc',
     },
 });
 
