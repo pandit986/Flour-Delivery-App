@@ -13,6 +13,8 @@ import LocationScreen from '../screens/header/location/LocationScreen';
 import ProductDetailScreen from '../screens/product-detail-page/ProductDetailScreen';
 import CategoryScreen from '../screens/home-page/product-category/component/CategoryScreen';
 import CommonHeader from '../screens/home-page/product-category/component/CommonHeader';
+import CartScreen from '../screens/Cart-screen/CartScreen';
+import CardHeader from '../screens/Cart-screen/component/CardHeader';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +44,13 @@ function AppNavigation() {
                     component={ProductDetailScreen}
                     options={({ navigation, route }) => ({
                         header: () => <CommonHeader navigation={navigation} title={route.params.title} />,
+                    })}
+                />
+                <Stack.Screen
+                    name="CardScreen"
+                    component={CartScreen}
+                    options={({ navigation }) => ({
+                        header: () => <CardHeader navigation={navigation} />,
                     })}
                 />
                 <Stack.Screen name="Main" component={MainTabNavigator} options={{ headerShown: false }} />

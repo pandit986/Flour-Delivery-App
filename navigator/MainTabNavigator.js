@@ -27,9 +27,6 @@ function MainTabNavigator() {
                     case 'Products':
                         iconName = focused ? 'grid' : 'grid-outline';
                         break;
-                    case 'Cart':
-                        iconName = focused ? 'cart' : 'cart-outline';
-                        break;
                     case 'Favorite':
                         iconName = focused ? 'heart' : 'heart-outline';
                         break;
@@ -59,9 +56,6 @@ function MainTabNavigator() {
                         break;
                     case 'Products':
                         label = 'Products';
-                        break;
-                    case 'Cart':
-                        label = 'Cart';
                         break;
                     case 'Favorite':
                         label = 'Favorite';
@@ -99,7 +93,7 @@ function MainTabNavigator() {
                                 <TouchableOpacity onPress={() => navigation.navigate('Favorite')}>
                                     <Ionicons name="notifications" size={24} color="#000" style={styles.icon} />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+                                <TouchableOpacity onPress={() => navigation.navigate('CardScreen')}>
                                     <CartIconWithBadge />
                                 </TouchableOpacity>
                             </View>
@@ -113,7 +107,6 @@ function MainTabNavigator() {
                 })}
             />
             <Tab.Screen name="Products" component={HomeScreen} options={{ headerShown: false }} />
-            <Tab.Screen name="Cart" component={HomeScreen} options={{ headerShown: false }} />
             <Tab.Screen name="Favorite" component={HomeScreen} options={{ headerShown: false }} />
             <Tab.Screen name="Menu" component={HomeScreen} options={{ headerShown: false }} />
         </Tab.Navigator>

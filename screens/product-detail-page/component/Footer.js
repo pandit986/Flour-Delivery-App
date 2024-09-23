@@ -13,7 +13,7 @@ const Footer = ({ quantity, setQuantity, handleAddToCart, selectedPackage }) => 
     useEffect(() => {
         Animated.timing(slideAnim, {
             toValue: 0,
-            duration: 500,
+            duration: 200,
             useNativeDriver: true,
         }).start();
     }, [slideAnim]);

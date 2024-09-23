@@ -6,6 +6,7 @@ import PackageSizeSelector from './component/PackageSizeSelector';
 import { addToCart } from './action/cartSlice';
 import ProductDescription from './component/ProductDescription';
 import Footer from './component/Footer';  // Import the Footer component
+import CartPopup from './component/CartPopup';
 
 const ProductDetailScreen = ({ route, navigation }) => {
     const { product } = route.params;
@@ -61,7 +62,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
                 </View>
             </ScrollView>
 
-            {showFooter && (
+            {!!showFooter && (
                 <Footer
                     quantity={quantity}
                     setQuantity={setQuantity}
@@ -69,6 +70,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
                     selectedPackage={selectedPackage}
                 />
             )}
+            {!!showPopup && <CartPopup showPopup={showPopup} setShowPopup={setShowPopup} navigation={navigation} />}
         </View>
     );
 };
