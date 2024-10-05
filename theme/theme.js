@@ -5,10 +5,10 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     skyblue: '#87CEEB', // sky blue color
-    primary: '#6200EE', // Purple color for a modern and elegant look
-    accent: '#03DAC6', // Teal color for highlighting important elements
-    background: '#FFFFFF', // White background for simplicity and elegance
-    surface: '#F5F5F5', // Light gray surface for contrast with the background
+    primary: '#853159', // Purple color for a modern and elegant look #6200EE
+    accent: '#c298ac', // Teal color for highlighting important elements
+    background: '#F2F2F2', // White background for simplicity and elegance
+    surface: '#F2F2F2', // Light gray surface for contrast with the background
     text: '#333333', // Dark gray text for readability
     error: 'red', // Dark red color for indicating errors
     notification: '#FFC107', // Yellow color for notifications
@@ -37,17 +37,17 @@ const theme = {
       },
     },
     Title: {
-        fontFamily: 'san-medium',
-        fontWeight: 'bold', // Bold font for titles
+      fontFamily: 'san-medium',
+      fontWeight: 'bold', // Bold font for titles
       fontSize: 24, // Large font size for titles
     },
     Subtitle: {
-        fontFamily: 'san',
-        fontWeight: 'normal', // Regular font for subtitles
-        fontSize: 16, // Normal font size for subtitles
+      fontFamily: 'san',
+      fontWeight: 'normal', // Regular font for subtitles
+      fontSize: 16, // Normal font size for subtitles
     },
     Card: {
-        borderRadius: 8, // Border radius for cards
+      borderRadius: 8, // Border radius for cards
       elevation: 4, // Shadow elevation for cards
     },
   },

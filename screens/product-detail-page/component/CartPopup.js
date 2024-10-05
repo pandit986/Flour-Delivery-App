@@ -1,12 +1,16 @@
 import React, { useRef, useEffect } from 'react';
 import { StyleSheet, Animated, TouchableOpacity, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';  // For the check icon
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 
 const CartPopup = ({ showPopup, setShowPopup }) => {
     // Create an animated value for the popup position
     const slideAnim = useRef(new Animated.Value(400)).current; // Start off-screen below
     const navigation = useNavigation();
+
+    //react native paper theme
+    const theme = useTheme();
+    const styles = createStyles(theme);
 
     useEffect(() => {
         if (showPopup) {
@@ -40,7 +44,7 @@ const CartPopup = ({ showPopup, setShowPopup }) => {
     );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
     popup: {
         position: 'absolute',
         bottom: '14%',
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     },
     addedText: {
         fontSize: 14,
-        color: '#333',
+        color: 'black',
         fontFamily: 'san-bold'
     },
     viewButton: {

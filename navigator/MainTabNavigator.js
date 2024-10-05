@@ -7,12 +7,17 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CartIconWithBadge from '../screens/header/card/CartIconWithBadge';
 import { truncateText } from '../screens/header/helper';
 import { useSelector } from 'react-redux';
+import { useTheme } from 'react-native-paper';
 
 const Tab = createBottomTabNavigator();
 
 function MainTabNavigator() {
 
     const locationState = useSelector((state) => state.location);
+
+    //react native paper theme
+    const theme = useTheme();
+    const styles = createStyles(theme);
 
     return (
         <Tab.Navigator screenOptions={({ route }) => ({
@@ -39,7 +44,7 @@ function MainTabNavigator() {
 
                 return <IconComponent name={iconName} size={iconSize} color={color} />;
             },
-            tabBarActiveTintColor: '#6200EE',
+            tabBarActiveTintColor: theme.colors.primary,
             tabBarInactiveTintColor: 'gray',
             showLabel: false,
             tabBarStyle: {
@@ -78,11 +83,11 @@ function MainTabNavigator() {
                         <View style={styles.headerContainer} >
                             <TouchableOpacity onPress={() => navigation.navigate('LocationScreen')} style={styles.locationContainer}>
                                 {/* <Ionicons name="location-outline" size={24} color="#6200EE" /> */}
-                                <Octicons name="location" size={28} color="#6200EE"></Octicons>
+                                <Octicons name="location" size={28} color={theme.colors.primary}></Octicons>
                                 <View style={styles.locationTextContainer}>
                                     <View style={styles.locationTitleContainer}>
                                         <Text style={styles.locationTitle}>{!locationState.pin ? "Select Pin Code" : truncateText(locationState.pin, 15)}</Text>
-                                        <Ionicons name="chevron-forward-outline" size={12} color="#000" style={styles.chevronIcon} />
+                                        <Ionicons name="chevron-forward-outline" size={12} color={theme.colors.primary} style={styles.chevronIcon} />
                                     </View>
                                     <Text style={styles.locationSubtitle}>
                                         {!locationState.selectedCity ? "Select Location By OnClick" : (truncateText(locationState.selectedCity, 25)).toUpperCase()}
@@ -91,7 +96,7 @@ function MainTabNavigator() {
                             </TouchableOpacity>
                             <View style={styles.headerIcons}>
                                 <TouchableOpacity onPress={() => navigation.navigate('Favorite')}>
-                                    <Ionicons name="notifications" size={24} color="#000" style={styles.icon} />
+                                    <Ionicons name="notifications" style={styles.icon} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => navigation.navigate('CardScreen')}>
                                     <CartIconWithBadge />
@@ -115,8 +120,7 @@ function MainTabNavigator() {
 
 export default MainTabNavigator;
 
-
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -152,9 +156,10 @@ const styles = StyleSheet.create({
     headerIcons: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10
+        gap: 15
     },
     icon: {
-        // marginLeft: 10,
+        color: theme.colors.primary,
+        fontSize: 24
     },
 });

@@ -7,8 +7,11 @@ import { addToCart } from './action/cartSlice';
 import ProductDescription from './component/ProductDescription';
 import Footer from './component/Footer';  // Import the Footer component
 import CartPopup from './component/CartPopup';
+import { useTheme } from 'react-native-paper';
 
 const ProductDetailScreen = ({ route, navigation }) => {
+
+    //state
     const { product } = route.params;
     const [showFooter, setShowFooter] = useState(false);
     const [quantity, setQuantity] = useState(1);
@@ -17,6 +20,10 @@ const ProductDetailScreen = ({ route, navigation }) => {
 
     const { items } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
+
+    //react native paper theme
+    const theme = useTheme();
+    const styles = createStyles(theme);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -75,10 +82,10 @@ const ProductDetailScreen = ({ route, navigation }) => {
     );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F2F2F2',
+        backgroundColor: theme.colors.background,
     },
     topContainer: {
         flex: 1,
