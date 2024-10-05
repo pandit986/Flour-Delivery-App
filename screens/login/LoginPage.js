@@ -103,7 +103,6 @@ const createStyles = (theme) => StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        // padding: 16,
         backgroundColor: 'white',
     },
     scrollContainer: {
@@ -124,8 +123,6 @@ const createStyles = (theme) => StyleSheet.create({
         fontFamily: "san-bold",
         fontSize: 20,
         textAlign: 'center',
-        // marginBottom: 20,
-        // marginTop: 20,
     },
 
     input: {
@@ -133,7 +130,7 @@ const createStyles = (theme) => StyleSheet.create({
         backgroundColor: theme.colors.background,
     },
     forgotPassword: {
-        color: 'blue',
+        color: theme.colors.primary,
         textAlign: 'right',
         marginBottom: 12,
     },
@@ -144,7 +141,6 @@ const createStyles = (theme) => StyleSheet.create({
     formContainer: {
         flex: 7,
         paddingHorizontal: 20,
-        // justifyContent: "center",
     },
 });
 

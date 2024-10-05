@@ -14,7 +14,7 @@ const CustomButton = ({ onPress, label }) => {
             onPress={onPress}
             style={styles.signUpButton}
             labelStyle={styles.signUpButtonLabel}
-            rippleColor="#9C4DFF"
+            rippleColor='#9d5a7a'
         >
             {label}
         </Button>

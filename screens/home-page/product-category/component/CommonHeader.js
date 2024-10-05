@@ -1,29 +1,34 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Badge } from 'react-native-paper';
+import { Badge, useTheme } from 'react-native-paper';
 import { useSelector } from 'react-redux';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CommonHeader = ({ navigation, title }) => {
 
     //slice
     const { items } = useSelector((state) => state.cart);
 
+    //react native paper theme
+    const theme = useTheme();
+    const styles = createStyles(theme);
+
     return (
         <View style={styles.headerContainer}>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconContainer}>
-                <Icon name="arrow-back" size={24} color="#000" />
+                <Icon name="arrow-back" style={styles.icon} />
             </TouchableOpacity>
             <Text style={styles.title}>{title}</Text>
-            <TouchableOpacity style={styles.iconContainer}>
-                <Icon name="shopping-bag" size={24} color="#000" />
+            <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('CardScreen')}>
+                <Ionicons name="cart" style={styles.icon} />
                 {items.length > 0 && <Badge style={styles.badge}>{items.length}</Badge>}
             </TouchableOpacity>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -47,8 +52,12 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: -4,
         right: -4,
-        backgroundColor: '#FF6347',
+        backgroundColor: 'red',
         color: 'white',
+    },
+    icon: {
+        color: theme.colors.primary,
+        fontSize: 24,
     },
 });
 

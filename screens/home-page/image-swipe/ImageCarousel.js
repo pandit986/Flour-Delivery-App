@@ -3,6 +3,7 @@ import { View, Dimensions, Image, StyleSheet } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import Animated, { Easing, useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated';
 import ContentLoader, { Rect } from 'react-content-loader/native';
+import { useTheme } from 'react-native-paper';
 
 const { width } = Dimensions.get('window');
 
@@ -16,8 +17,13 @@ const images = [
 ];
 
 const ImageCarousel = () => {
+
+    //state
     const progressValue = useSharedValue(0);
     const [loading, setLoading] = useState(true);
+
+    //react native paper theme
+    const theme = useTheme();
 
     useEffect(() => {
         const timeout = setTimeout(() => setLoading(false), 2000); // Simulate image loading time
@@ -27,7 +33,7 @@ const ImageCarousel = () => {
     // Define animated styles outside of any conditional logic
     const animatedStyles = images.map((_, index) =>
         useAnimatedStyle(() => {
-            const backgroundColor = withTiming(progressValue.value === index ? '#FFFFFF' : '#888888', {
+            const backgroundColor = withTiming(progressValue.value === index ? `${theme.colors.accent}` : '#888888', {
                 duration: 500,
                 easing: Easing.inOut(Easing.ease),
             });

@@ -107,7 +107,7 @@ const createStyles = (theme) => StyleSheet.create({
         height: 10,
         width: 10,
         borderRadius: 5,
-        backgroundColor: '#888',
+        backgroundColor: theme.colors.primary,
         marginHorizontal: 8,
     },
     bottomContainer: {

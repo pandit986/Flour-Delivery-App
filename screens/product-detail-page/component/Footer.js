@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { useTheme } from 'react-native-paper';
 
 const Footer = ({ quantity, setQuantity, handleAddToCart, selectedPackage }) => {
 
@@ -10,10 +11,14 @@ const Footer = ({ quantity, setQuantity, handleAddToCart, selectedPackage }) => 
     // animated
     const slideAnim = useRef(new Animated.Value(200)).current;
 
+    //react native paper theme
+    const theme = useTheme();
+    const styles = createStyles(theme);
+
     useEffect(() => {
         Animated.timing(slideAnim, {
             toValue: 0,
-            duration: 500,
+            duration: 200,
             useNativeDriver: true,
         }).start();
     }, [slideAnim]);
@@ -57,7 +62,7 @@ const Footer = ({ quantity, setQuantity, handleAddToCart, selectedPackage }) => 
     );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
     footer: {
         position: 'absolute',
         bottom: 0,
@@ -95,7 +100,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 7,
     },
     plusButton: {
-        backgroundColor: '#853159',
+        backgroundColor: theme.colors.primary,
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderTopRightRadius: 7,
@@ -112,7 +117,7 @@ const styles = StyleSheet.create({
         fontFamily: 'san-bold'
     },
     addToCart: {
-        backgroundColor: '#853159',
+        backgroundColor: theme.colors.primary,
         paddingVertical: 8,
         paddingHorizontal: 15,
         borderRadius: 10,

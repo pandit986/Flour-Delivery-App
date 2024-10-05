@@ -109,8 +109,6 @@ const LocationScreen = ({ navigation }) => {
     }
   };
 
-  console.log(showButtonAndText, "showButtonAndText")
-  console.log(locationState)
   return (
     <View style={styles.container}>
       <View style={styles.header}>
