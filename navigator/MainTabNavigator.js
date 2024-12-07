@@ -8,6 +8,7 @@ import CartIconWithBadge from '../screens/header/card/CartIconWithBadge';
 import { truncateText } from '../screens/header/helper';
 import { useSelector } from 'react-redux';
 import { useTheme } from 'react-native-paper';
+import UnderDevelopmentScreen from '../screens/under-development/UnderDevelopmentScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -111,8 +112,8 @@ function MainTabNavigator() {
                     headerTitleAlign: 'center',
                 })}
             />
-            <Tab.Screen name="Products" component={HomeScreen} options={{ headerShown: false }} />
-            <Tab.Screen name="Favorite" component={HomeScreen} options={{ headerShown: false }} />
+            <Tab.Screen name="Products" component={UnderDevelopmentScreen} options={{ headerShown: false }} />
+            <Tab.Screen name="Favorite" component={UnderDevelopmentScreen} options={{ headerShown: false }} />
             <Tab.Screen name="Menu" component={HomeScreen} options={{ headerShown: false }} />
         </Tab.Navigator>
     );
