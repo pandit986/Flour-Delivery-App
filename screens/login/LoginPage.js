@@ -6,6 +6,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import ErrorMessage from '../../components/Error/ErrorMesssage';
 import CustomButton from '../../components/Button/Button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from './action/loginSlice';
+import { storeAuthToken } from '../../navigator/helper';
 
 const schema = yup.object().shape({
     email: yup.string().email('Invalid email address').required('Email is required'),
@@ -25,6 +29,9 @@ const LoginPage = ({ navigation }) => {
         resolver: yupResolver(schema),
     });
 
+    // slice
+    const dispatch = useDispatch();
+
     const theme = useTheme();
     const styles = createStyles(theme); // Create styles based on the theme
 
@@ -32,9 +39,32 @@ const LoginPage = ({ navigation }) => {
     const { width, height } = Dimensions.get("window");
     const imageHeight = height * 0.3; // 30% of screen height
 
-    const onSubmit = data => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        try {
+            const storedCredentials = await AsyncStorage.getItem('userCredentials');
+            if (storedCredentials) {
+                const parsedCredentials = JSON.parse(storedCredentials);
+
+                if (
+                    parsedCredentials.email.toLowerCase() === data.email.toLowerCase() &&
+                    parsedCredentials.password === data.password
+                ) {
+                    dispatch(loginSuccess());
+                    await AsyncStorage.setItem('authToken', "true");
+                    // await storeAuthToken(true);
+                    navigation.navigate('Main');
+                } else {
+                    alert('Invalid email or password. Please try again.');
+                }
+            } else {
+                alert('No registered user found. Please sign up first.');
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert('An error occurred. Please try again later.');
+        }
     };
+
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>

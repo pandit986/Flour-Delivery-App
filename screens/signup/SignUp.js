@@ -8,6 +8,7 @@ import TermsAndConditionsModal from "./modal/TermsAndConditions";
 import { helpData } from "./help";
 import CustomButton from "../../components/Button/Button";
 import ErrorMessage from "../../components/Error/ErrorMesssage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignUpSchema = Yup.object().shape({
   username: Yup.string().required("Name is required"),
@@ -45,9 +46,16 @@ const SignUpScreen = ({ navigation }) => {
   const { width, height } = Dimensions.get("window");
   const imageHeight = height * 0.3; // 30% of screen height
 
-  //Function
-  const onSubmit = (formData) => {
-    console.log(formData, "formData")
+  const onSubmit = async (formData) => {
+    try {
+      await AsyncStorage.setItem('userCredentials', JSON.stringify(formData));
+      console.log('User credentials saved:', formData);
+
+      navigation.navigate("LoginPage")
+    } catch (error) {
+      console.error('Error saving user credentials:', error);
+      alert('Failed to save user credentials. Please try again.');
+    }
   };
 
   return (
