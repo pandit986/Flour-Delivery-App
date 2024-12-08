@@ -36,6 +36,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
         if (selectedPackage) {
             const cartItem = {
                 productId: product.id,
+                cartId: Date.now(),
                 name: product.name,
                 packageSize: selectedPackage.size,
                 price: selectedPackage.price,

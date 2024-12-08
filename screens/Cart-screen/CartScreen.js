@@ -1,56 +1,123 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-// import { incrementQuantity, decrementQuantity } from './store/cartSlice'; // Import your slice actions
+import { incrementQuantity, decrementQuantity, removeItemFromCart } from '../product-detail-page/action/cartSlice';
+import EmptyCart from './component/EmptyCart';
+import AddressFormModal from './component/AddressFormModal';
+import OrderSuccessModal from './component/OrderSuccessScreen';
 
 const CartScreen = ({ navigation }) => {
+
+    //state
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [isSummaryModal, setSummaryModal] = useState(false);
+
+    //slice 
     const dispatch = useDispatch();
-    const { items, totalAmount = 10, totalQuantity = 10 } = useSelector((state) => state.cart);
+    const { items, address } = useSelector((state) => state.cart);
 
-    const renderCartItem = ({ item }) => {
-        return (
-            <View style={styles.cartItem}>
-                <View style={styles.itemDetails}>
-                    <Text style={styles.itemName}>{item.name}</Text>
-                    <Text style={styles.itemPackage}>Package Size: {item.packageSize}</Text>
-                    <Text style={styles.itemPrice}>₹{item.price}/Item</Text>
-                </View>
+    // Calculate totals
+    const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
 
+    // Handlers
+    const handleIncrement = (productId) => {
+        dispatch(incrementQuantity(productId));
+    };
+
+    const handleDecrement = (productId) => {
+        dispatch(decrementQuantity(productId));
+    };
+
+    const handleRemoveItem = (productId) => {
+        dispatch(removeItemFromCart(productId));
+    };
+
+    const renderCartItem = ({ item }) => (
+        <View style={styles.cartItem}>
+            <View style={styles.row}>
+                <Text style={styles.itemName}>{item.name}</Text>
+                <TouchableOpacity onPress={() => handleRemoveItem(item.cartId)}>
+                    <Icon name="delete" size={24} color="#b0003a" />
+                </TouchableOpacity>
+            </View>
+            <Text style={styles.itemDetails}>
+                Package Size: {item.packageSize} KG | ₹{item.price}/Item
+            </Text>
+            <View style={styles.row}>
                 <View style={styles.quantityControl}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleDecrement(item.cartId)}>
                         <Icon name="remove" size={24} color="#fff" style={styles.quantityButton} />
                     </TouchableOpacity>
                     <Text style={styles.quantity}>{item.quantity}</Text>
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => handleIncrement(item.cartId)}>
                         <Icon name="add" size={24} color="#fff" style={styles.quantityButton} />
                     </TouchableOpacity>
                 </View>
-
-                <View style={styles.subTotal}>
-                    <Text style={styles.subTotalText}>Sub-Total: ₹{item.subTotal}/-</Text>
-                </View>
+                <Text style={styles.subTotalText}>
+                    ₹{(item.price * item.quantity).toFixed(2)}
+                </Text>
             </View>
-        );
-    };
+        </View>
+    );
+
+    if (items.length === 0) {
+        return <EmptyCart />
+    }
 
     return (
         <View style={styles.container}>
+
             <FlatList
                 data={items}
                 renderItem={renderCartItem}
-                keyExtractor={(item) => item.productId.toString()}
+                keyExtractor={(item) => item.cartId.toString()}
                 contentContainerStyle={styles.cartList}
             />
 
+            {/* Summary Card */}
+            <View style={styles.summaryCard}>
+                <Text style={styles.summaryTitle}>Order Summary</Text>
+                {address && (
+                    <View style={styles.addressContainer}>
+                        <Text style={styles.addressLabel}>Shipping Address:</Text>
+                        {/* Show only a shortened version of the address */}
+                        <Text style={styles.addressText}>
+                            {`${address.name}, ${address.city}, ${address.postalCode}`}
+                        </Text>
+                    </View>
+                )}
+                <View style={styles.summaryDetails}>
+                    <Text style={styles.summaryText}>Total Products:</Text>
+                    <Text style={styles.summaryValue}>{totalQuantity}</Text>
+                </View>
+                <View style={styles.summaryDetails}>
+                    <Text style={styles.summaryText}>Total Price:</Text>
+                    <Text style={styles.summaryValue}>₹{totalAmount}</Text>
+                </View>
+            </View>
+
             <View style={styles.footer}>
-                <Text style={styles.footerText}>
-                    {totalQuantity} Product(s) | Total: ₹{totalAmount}
-                </Text>
-                <TouchableOpacity style={styles.checkoutButton}>
+                <TouchableOpacity style={styles.checkoutButton} onPress={() => address === null ? setModalVisible(true) : setSummaryModal(true)}>
                     <Text style={styles.checkoutButtonText}>Checkout</Text>
                 </TouchableOpacity>
             </View>
+
+            <AddressFormModal
+                visible={isModalVisible}
+                onClose={() => setModalVisible(false)}
+            />
+            <OrderSuccessModal
+                isVisible={isSummaryModal}
+                onClose={() => setSummaryModal(false)}
+                data={{
+                    orderId: '12345',
+                    items,
+                    totalAmount,
+                }}
+            />
+
         </View>
     );
 };
@@ -61,38 +128,39 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
     },
     cartItem: {
-        flexDirection: 'column',
         backgroundColor: '#fff',
         marginVertical: 8,
         marginHorizontal: 10,
-        padding: 10,
-        borderRadius: 10,
+        padding: 12,
+        borderRadius: 8,
         elevation: 2,
     },
-    itemDetails: {
-        marginBottom: 8,
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 5,
     },
     itemName: {
         fontSize: 16,
         fontWeight: 'bold',
     },
-    itemPackage: {
+    itemDetails: {
         fontSize: 14,
         color: '#666',
-    },
-    itemPrice: {
-        fontSize: 14,
-        color: '#666',
+        marginBottom: 10,
     },
     quantityControl: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        marginVertical: 10,
+        backgroundColor: '#f0f0f0',
+        borderRadius: 5,
+        paddingHorizontal: 5,
+        paddingVertical: 2,
     },
     quantityButton: {
         backgroundColor: '#b0003a',
-        padding: 8,
+        padding: 5,
         borderRadius: 5,
     },
     quantity: {
@@ -100,29 +168,61 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginHorizontal: 10,
     },
-    subTotal: {
-        alignItems: 'flex-end',
-    },
     subTotalText: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 'bold',
         color: '#b0003a',
     },
     cartList: {
-        paddingBottom: 80, // To avoid the footer overlapping the list
+        paddingBottom: 80,
     },
-    footer: {
+    summaryCard: {
+        backgroundColor: '#fff',
+        margin: 10,
+        padding: 15,
+        borderRadius: 10,
+        elevation: 2,
+    },
+    summaryTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    addressContainer: {
+        marginBottom: 10,
+        backgroundColor: '#f9f9f9',
+        padding: 5,
+        borderRadius: 5,
+    },
+    addressLabel: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    addressText: {
+        fontSize: 12,
+        color: '#555',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+    },
+    summaryDetails: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 15,
-        borderTopWidth: 1,
-        borderTopColor: '#ddd',
-        backgroundColor: '#fff',
+        marginVertical: 5,
     },
-    footerText: {
+    summaryText: {
+        fontSize: 16,
+        color: '#333',
+    },
+    summaryValue: {
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    footer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 15,
+        backgroundColor: '#fff',
     },
     checkoutButton: {
         backgroundColor: '#b0003a',
@@ -136,5 +236,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
+
 
 export default CartScreen;
