@@ -9,6 +9,7 @@ import { truncateText } from '../screens/header/helper';
 import { useSelector } from 'react-redux';
 import { useTheme } from 'react-native-paper';
 import UnderDevelopmentScreen from '../screens/under-development/UnderDevelopmentScreen';
+import MenuScreen from '../screens/Menu/MenuScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,8 +34,8 @@ function MainTabNavigator() {
                     case 'Products':
                         iconName = focused ? 'grid' : 'grid-outline';
                         break;
-                    case 'Favorite':
-                        iconName = focused ? 'heart' : 'heart-outline';
+                    case 'Rewards':
+                        iconName = focused ? 'gift' : 'gift-outline';
                         break;
                     case 'Menu':
                         iconName = focused ? 'menu' : 'menu-outline';
@@ -63,8 +64,8 @@ function MainTabNavigator() {
                     case 'Products':
                         label = 'Products';
                         break;
-                    case 'Favorite':
-                        label = 'Favorite';
+                    case 'Rewards':
+                        label = 'Rewards';
                         break;
                     case 'Menu':
                         label = 'Menu';
@@ -113,8 +114,24 @@ function MainTabNavigator() {
                 })}
             />
             <Tab.Screen name="Products" component={UnderDevelopmentScreen} options={{ headerShown: false }} />
-            <Tab.Screen name="Favorite" component={UnderDevelopmentScreen} options={{ headerShown: false }} />
-            <Tab.Screen name="Menu" component={HomeScreen} options={{ headerShown: false }} />
+            <Tab.Screen name="Rewards" component={UnderDevelopmentScreen} options={{ headerShown: false }} />
+            {/* <Tab.Screen name="Menu" component={MenuScreen} options={{ headerShown: false }} /> */}
+            <Tab.Screen
+                name="Menu"
+                component={MenuScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: "Menu",
+                    headerTitleAlign: "center",
+                    headerStyle: {
+                        backgroundColor: theme.colors.primary, // Adjust to match your theme
+                    },
+                    headerTintColor: "#fff",
+                    headerTitleStyle: {
+                        fontFamily: "san-bold"
+                    },
+                }}
+            />
         </Tab.Navigator>
     );
 }
