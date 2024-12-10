@@ -13,7 +13,7 @@ const CategoryModal = ({ visible, onClose, category }) => {
     const navigation = useNavigation();
 
     useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 2000);
+        const timer = setTimeout(() => setIsLoading(false), 1000);
         return () => clearTimeout(timer);
     }, []);
 

@@ -37,14 +37,13 @@ const theme = {
       },
     },
     Title: {
-      fontFamily: 'san-medium',
-      fontWeight: 'bold', // Bold font for titles
-      fontSize: 24, // Large font size for titles
+      fontFamily: 'san-bold',
+      fontSize: 16, // Large font size for titles
     },
     Subtitle: {
       fontFamily: 'san',
       fontWeight: 'normal', // Regular font for subtitles
-      fontSize: 16, // Normal font size for subtitles
+      fontSize: 12, // Normal font size for subtitles
     },
     Card: {
       borderRadius: 8, // Border radius for cards

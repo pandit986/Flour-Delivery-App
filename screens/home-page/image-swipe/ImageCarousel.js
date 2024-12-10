@@ -8,12 +8,12 @@ import { useTheme } from 'react-native-paper';
 const { width } = Dimensions.get('window');
 
 const images = [
-    'https://images.unsplash.com/photo-1721069275326-5fd80e01ce8d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1706430263184-c1f9ac844a54?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1708958151986-2b032fde35ce?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1721069275326-5fd80e01ce8d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1706430263184-c1f9ac844a54?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1708958151986-2b032fde35ce?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    'https://img.freepik.com/free-photo/flour-being-sprinkled-fresh-baked-bread_181624-189.jpg?t=st=1733806895~exp=1733810495~hmac=a50b9e2e2a6138a55c694c0ec926ed989932607c96bef0e0ed1ac1a3d935a7cb&w=740',
+    'https://img.freepik.com/free-photo/front-view-baker-hands-mixing-flour_23-2148302895.jpg?t=st=1733809371~exp=1733812971~hmac=4fb15d0b69d50b48afe5dcddc849b0f9bc52a23267cbaf7545a5318fc4ca599c&w=740',
+    'https://img.freepik.com/free-photo/stashed-flour-used-cooking_23-2149517188.jpg?t=st=1733809413~exp=1733813013~hmac=494cebddb068ce2c3232019dbd3f56cbca2b411d97543dfe40507a0d329c08b0&w=740',
+    'https://img.freepik.com/free-photo/spoon-ingredients-full-flour_23-2149482597.jpg?t=st=1733809470~exp=1733813070~hmac=5f34aaff28f043d3e13a3f42535a74259f29b822532fe68f7b38a64010fe2bf5&w=740',
+    'https://img.freepik.com/free-photo/flour-falling-baking-table-with-ingredients-bowl_23-2147872714.jpg?t=st=1733809502~exp=1733813102~hmac=1be9709c96430776d9a62f9685568c1fded4e18c5356269c62f6ad58d570ac7a&w=740',
+    'https://img.freepik.com/free-photo/wooden-cutting-board-with-slices-bread_114579-39100.jpg?t=st=1733809568~exp=1733813168~hmac=a9afed2fa7a9e8ff8006490dd589ef16b2f799cedb5e98bdf0e21d82dc28d81b&w=740'
 ];
 
 const ImageCarousel = () => {
@@ -26,7 +26,7 @@ const ImageCarousel = () => {
     const theme = useTheme();
 
     useEffect(() => {
-        const timeout = setTimeout(() => setLoading(false), 2000); // Simulate image loading time
+        const timeout = setTimeout(() => setLoading(false), 1000); // Simulate image loading time
         return () => clearTimeout(timeout);
     }, []);
 

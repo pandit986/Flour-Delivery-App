@@ -63,9 +63,9 @@ const WelcomeScreen = ({ navigation }) => {
                         <Text style={styles.buttonText}>Get Started</Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+                {/* <TouchableOpacity onPress={() => navigation.navigate("Main")}>
                     <Text style={styles.exploreText} >Explore as a Visitor</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     );

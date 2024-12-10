@@ -92,7 +92,7 @@ function MainTabNavigator() {
                                         <Ionicons name="chevron-forward-outline" size={12} color={theme.colors.primary} style={styles.chevronIcon} />
                                     </View>
                                     <Text style={styles.locationSubtitle}>
-                                        {!locationState.selectedCity ? "Select Location By OnClick" : (truncateText(locationState.selectedCity, 25)).toUpperCase()}
+                                        {!locationState.selectedCity ? "Select Location" : (truncateText(locationState.selectedCity, 25)).toUpperCase()}
                                     </Text>
                                 </View>
                             </TouchableOpacity>
