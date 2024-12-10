@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo/logo1.png",
         "backgroundColor": "#F6E4B4"
-      }
+      },
+      "package": "com.pandit986.ChakkiFreshAata"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f3a3224f-e261-4f14-85e9-57693e2bd880"
+      }
     }
   }
 }
